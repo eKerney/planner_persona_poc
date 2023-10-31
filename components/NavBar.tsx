@@ -4,7 +4,7 @@ import Image from "next/image"
 export default function NavBar() {
   const orgID: string = 'test';
   return (
-  <div className="navbar bg-base-100">
+  <div className="navbar  h-full rounded-lg">
     <div className="flex-1">
     </div>
     <div className="flex-none gap-2">

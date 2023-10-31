@@ -18,10 +18,14 @@ export default function RootLayout({
     <html>
       <body>
         <main>
-          <div className='bg-hadopelagic grid grid-cols-12 grid-rows-4 h-screen grid-flow-row-dense p-2 gap-1' >
-            <div className='border border-deep-sky bg-hadopelagic rounded-lg shadow-xl h-screen row-span-5 col-span-1 ' />
-            <div className=' rounded-lg shadow-xl h-screen col-span-11 grid grid-rows-6 gap-1 '>
-              <div className='border border-deep-sky rounded-lg shadow-xl row-span-1 ' />
+          <div id='root' className='bg-hadopelagic grid grid-cols-12 grid-rows-4 h-screen grid-flow-row-dense p-2 gap-1' >
+            <div id='leftDrawer' className='border border-deep-sky bg-hadopelagic rounded-lg shadow-xl h-screen row-span-5 col-span-1 '> 
+              <LeftDrawer  />
+            </div>
+            <div className='rounded-lg shadow-xl h-screen col-span-11 grid grid-rows-6 gap-1 '>
+              <div id='topNav' className='border border-deep-sky rounded-lg shadow-xl row-span-1 '>
+                <NavBar />
+              </div>
               <div className='rounded-lg shadow-xl row-span-5  grid grid-cols-6 grid-rows-4 gap-1'> 
                 <div className='border border-deep-sky rounded-lg shadow-xl col-span-2 row-span-4 ' />
                 <div className='border border-deep-sky rounded-lg shadow-xl col-span-4 row-span-4' />
