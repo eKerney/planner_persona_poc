@@ -2,14 +2,15 @@ import Link from 'next/link';
 import Image from "next/image"
 
 const LeftDrawer = () => {
+  const tTip: string = "tooltip tooltip-bottom";
   const iconData = [
-    {link:"", clasName:"tooltip tooltip-bottom", toolText:"add data AGOL", image:"/photo-1534528741775-53994a69daeb.jpg", },
-    {link:"", clasName:"tooltip tooltip-bottom", toolText:"add data URL", image:"/photo-1534528741775-53994a69daeb.jpg", },
-    {link:"", clasName:"tooltip tooltip-bottom", toolText:"add data file", image:"/photo-1534528741775-53994a69daeb.jpg", },
-    {link:"", clasName:"tooltip tooltip-bottom", toolText:"edit layers", image:"/photo-1534528741775-53994a69daeb.jpg", },
-    {link:"", clasName:"tooltip tooltip-bottom", toolText:"layer visibility", image:"/photo-1534528741775-53994a69daeb.jpg", },
-    {link:"", clasName:"tooltip tooltip-bottom", toolText:"geoprocess tools", image:"/photo-1534528741775-53994a69daeb.jpg", },
-    {link:"", clasName:"tooltip tooltip-bottom", toolText:"export config", image:"/photo-1534528741775-53994a69daeb.jpg", },
+    {link:"", clasName:tTip, toolText:"add data AGOL", image:"/add-circle.svg", },
+    {link:"", clasName:tTip, toolText:"add data URL", image:"/add-square.svg", },
+    {link:"", clasName:tTip, toolText:"add data file", image:"/add-square.svg", },
+    {link:"", clasName:tTip, toolText:"edit layers", image:"/add-square.svg", },
+    {link:"", clasName:tTip, toolText:"layer visibility", image:"/photo-1534528741775-53994a69daeb.jpg", },
+    {link:"", clasName:tTip, toolText:"geoprocess tools", image:"/photo-1534528741775-53994a69daeb.jpg", },
+    {link:"", clasName:tTip, toolText:"export config", image:"/photo-1534528741775-53994a69daeb.jpg", },
   ];
 
   return (
@@ -23,7 +24,7 @@ const LeftDrawer = () => {
         <ul className="menu w-full min-h-full text-base-content rounded-lg ">
           {iconData.map(d => 
             <li key={d.toolText}><Link href={d.link} className={d.clasName} data-tip={d.toolText}>
-                <Image src={d.image} alt={d.toolText} width="48" height="48" className='mx-auto' />
+                <Image src={d.image} alt={d.toolText} width="32" height="32" className='mx-auto' />
                 <div className='text-xs'>{d.toolText}</div>
             </Link></li>)}
         </ul>
