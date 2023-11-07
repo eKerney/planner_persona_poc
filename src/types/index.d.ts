@@ -7,6 +7,22 @@ export enum DataStatus {
   EMPTY = "empty",
 }
 
+export enum DataSource {
+  FILE = "file",
+  URL = "url",
+  AGOL = "agol",
+  OTHER = "other",
+}
+
+export enum DataType {
+  GEOJSON = "geojson",
+  GEODATAFRAME = "geodataframe",
+  SHAPEFILE = "shapefile",
+  KML = "kml",
+  GEODATABASE = "geodatabase",
+  GEOPARQUET = "geoparquet"
+} 
+
 export type Action = {
     type: string
     payload?: any
@@ -43,19 +59,39 @@ export interface MapContextInterface {
     graphicsLayer?: __esri.GraphicsLayer;
 }
 
+export interface DataStoreInterface {
+  dataType: DataType; 
+  dataSource: DataSource;
+  GeoJSONfeatureCollection: GeoJSONfeatureCollection;
+  fields: string[];
+  blob: Blob;
+  url: string;
+  info: string;
+}
+
+export interface DataAction {
+  DATATYPE: string; 
+  DATASOURCE: string;
+  GEOJSONFEATURECOLLECTION: string;
+  FIELDS: string;
+  BLOB: string;
+  URL: string;
+  INFO: string;
+}
+
 export type GeoJSONprops = {
     SCORE?: string;
     id?: string;
 }
 
-export type Feature = {
+export type GeoJSONfeature = {
     type: string;
     geometry: Object
     id?: string;
     properties?: GeoJSONprops;
 }
 
-export interface GeoJSONinterface {
+export type GeoJSONfeatureCollection = {
     type: string;
     features: Feature[];
 }
