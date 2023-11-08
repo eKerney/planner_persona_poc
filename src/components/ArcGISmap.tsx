@@ -1,26 +1,52 @@
-import { useEffect, useRef} from "react";
+import { useContext, useEffect, useRef} from "react";
 import WebScene from "@arcgis/core/WebScene";
 import SceneView from "@arcgis/core/views/SceneView";
+import Search from "@arcgis/core/widgets/Search";
+import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
+import SceneLayer from "@arcgis/core/layers/SceneLayer";
+import { AppContext } from "../contexts/AppStore";
+import { MapContext } from "../contexts/MapStore";
 
 export const ArcGISmap = ({ children }: {children: any}) => {
+  // @ts-ignore
+  const [appContext, appDispatch] = useContext(AppContext);
+  // @ts-ignore
+  const [mapContext, mapDispatch] = useContext(MapContext);
+
     const mapDiv = useRef(null);
     useEffect(function createMap() {
     if (mapDiv.current) {
         const scene = new WebScene({ 
-            basemap: "streets-night-vector",
+            basemap: appContext.basemap,
             ground: "world-elevation",
         });
         const view = new SceneView({
                 map: scene,
                 container: mapDiv.current,
                 padding: {top: 40},
-                camera: { position: {x: -83.113, y: 42.268, z: 4754}, heading: 33.511, tilt: 65.004 },
+                camera: appContext.cameraLocation,
                 spatialReference: { wkid: 4326 },
                 qualityProfile: "high",
                 environment: {
                     lighting: { directShadowsEnabled: true,  date: new Date("Sun Jun 4 2023 22:00:00 GMT+0100 (CET)") }
                 }
         });
+
+        view.popup.defaultPopupTemplateEnabled = true;
+        const graphicsLayer = new GraphicsLayer({elevationInfo: 'on-the-ground' });
+        scene.add(graphicsLayer);
+          const OSM3Dbuildings = new SceneLayer({
+          url: 'https://basemaps3d.arcgis.com/arcgis/rest/services/OpenStreetMap3D_Buildings_v1/SceneServer',
+          popupEnabled: false,
+          opacity: 0.1
+        }); 
+        scene.add(OSM3Dbuildings);
+        // set scene and view context
+        mapDispatch({ type: 'sceneViewGraphics', payload: {scene: scene, view: view, graphicsLayer: graphicsLayer }})
+        
+        const searchWidget = new Search({view: view, visible: true });
+        view.ui.add(searchWidget, {position: "top-left", index: 0});
+
         return () => { view && view.destroy() };
         }
     }, []);

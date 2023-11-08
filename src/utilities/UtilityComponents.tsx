@@ -1,10 +1,16 @@
-import { MouseEventHandler } from "react";
+import {useState, useEffect, useContext } from 'react';
 import { AlertProps, ButtonProps } from "../types";
+import { fileLoader, fileValidator } from './DataLoader';
+import { AppContext } from '../contexts/AppStore';
+import { DataContext } from '../contexts/DataStore';
+import { DataType, LoadingStatus } from '../types/enums';
 
-export const Button = ({ text, color, textColor, alertProps, handleClick=(()=>alert('butt on'))}: ButtonProps) => {
+export const Button = ({ text, color, textColor, alertProps, modal="", handleClick=(()=>alert('butt on'))}: ButtonProps) => {
   return ( 
   <>
-    <AlertModal text={alertProps.text} id={alertProps.id} alertType={alertProps.alertType} />
+    {modal === "upload" 
+      ? <UploadModal text={alertProps.text} id={alertProps.id} alertType={alertProps.alertType} /> 
+      : <AlertModal text={alertProps.text} id={alertProps.id} alertType={alertProps.alertType} /> }
     <button 
       className={`btn rounded btn-wide opacity-80 ${color}`}
       onClick={handleClick}
@@ -29,4 +35,55 @@ export const AlertModal = ({ id, text, alertType }: AlertProps) => {
       </form>
     </dialog>
   )
+}
+
+export const UploadModal = ({ id, text, alertType }: AlertProps) => {
+  return (
+    <dialog id={id} className="modal">
+      <div className="modal-box p-0">
+        <div className={`alert ${alertType}`}>
+          <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          <span>{UploadAOIpanel(id)}</span>
+        </div>
+      </div>
+      <form method="dialog" className="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+  )
+}
+
+export const UploadAOIpanel = (id: string) => {
+  // @ts-ignore
+  const [appContext, appDispatch] = useContext(AppContext)
+  // @ts-ignore
+  const [dataContext, dataDispatch] = useContext(DataContext)
+  const [files, setFiles] = useState([]);
+  useEffect(() => console.log(dataContext), [dataContext]);
+
+  useEffect(function afterUploadSuccessEffect() {
+    appContext.uploadStatus === LoadingStatus.SUCCESS && document.getElementById(id)?.close() 
+    appContext.uploadStatus === LoadingStatus.SUCCESS && fileValidator(dataContext, dataDispatch);
+  }, [appContext.uploadStatus])
+
+  useEffect(function fileUploadReader() {
+    const reader = new FileReader();
+    reader.onload = (evt) => fileLoader(evt.target?.result, appContext, appDispatch, dataContext, dataDispatch);
+    files.length ? reader.readAsText(files[0]) : console.log('none');
+  }, [files])
+
+  // @ts-ignore
+  const handleFileUpload = (event) => setFiles(event.target.files);
+
+  return  (
+    <div className="control-panel" >
+      <input 
+        type="file" 
+        className="file-input file-input-bordered  w-full max-w-xs" 
+        accept='.json,.geojson,.GeoJSON,.GEOJSON'
+        onChange={handleFileUpload}
+      />
+      <hr />
+    </div>
+  )    
 }

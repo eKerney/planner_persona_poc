@@ -1,7 +1,6 @@
-import { Button } from "../utilities/UtilityComponents";
+import { Button, UploadAOIpanel } from "../utilities/UtilityComponents";
 
 export const ToolPanel = () => {
-
   return (
     <div className="drawer lg:drawer-open flex justify-center pt-5">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -14,8 +13,9 @@ export const ToolPanel = () => {
           text="UPLOAD DATA" 
           textColor="text-dark-grey-200"
           color="bg-deep-sky-500"
-          alertProps={{text: "UPLOAD SUCCESS", id:"uploadSuccess", alertType: "alert-success"}}
-          handleClick={()=>document.getElementById('uploadSuccess').showModal()} 
+          modal="upload"
+          alertProps={{text: "UPLOAD SUCCESS", id:"uploadDialog", alertType: "alert-info"}}
+          handleClick={()=>document.getElementById('uploadDialog').showModal()} 
         />
         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         <Button 

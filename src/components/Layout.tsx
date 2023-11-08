@@ -1,3 +1,5 @@
+import { LayoutProps } from "../types";
+
 export const RootLayout = ({ ArcMap, ToolPanel }: LayoutProps) => {
   return (
           <div id='root' className='bg-asl-black grid grid-cols-12 grid-rows-4 h-screen grid-flow-row-dense p-2 gap-4' >

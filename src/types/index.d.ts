@@ -1,27 +1,5 @@
 import { FC } from "react";
-
-export enum DataStatus {
-  LOADING = "loading",
-  SUCCESS = "success",
-  ERROR = "error",
-  EMPTY = "empty",
-}
-
-export enum DataSource {
-  FILE = "file",
-  URL = "url",
-  AGOL = "agol",
-  OTHER = "other",
-}
-
-export enum DataType {
-  GEOJSON = "geojson",
-  GEODATAFRAME = "geodataframe",
-  SHAPEFILE = "shapefile",
-  KML = "kml",
-  GEODATABASE = "geodatabase",
-  GEOPARQUET = "geoparquet"
-} 
+import { Basemaps, DataStatus, DataType, GeometryType, LoadingStatus } from "./enums";
 
 export type Action = {
     type: string
@@ -35,15 +13,17 @@ export interface CameraPosition {
 }
 
 export interface AppContextInterface {
-  uploadStatus: DataStatus;
-  submitStatus: DataStatus;
-  approveStatus: DataStatus;
-  denyStatus: DataStatus;
-  basemap: DataStatus;
+  dataStatus: LoadingStatus; 
+  uploadStatus: LoadingStatus;
+  submitStatus: LoadingStatus;
+  approveStatus: LoadingStatus;
+  denyStatus: LoadingStatus;
+  basemap: Basemaps;
   cameraLocation: CameraPosition;
 }
 
 export interface AppAction {
+  DATASTATUS: string;
   UPLOADSTATUS: string;
   SUBMITSTATUS: string;
   APPROVESTATUS: string;
@@ -52,30 +32,27 @@ export interface AppAction {
   CAMERALOCATION: string;
 }
 
-export interface MapContextInterface {
-    scene?: __esri.WebScene;
-    view?: __esri.View;
-    sketch?: __esri.Sketch;
-    graphicsLayer?: __esri.GraphicsLayer;
-}
-
-export interface DataStoreInterface {
+export interface DataContextInterface {
   dataType: DataType; 
   dataSource: DataSource;
+  geometryType: GeometryType;
   GeoJSONfeatureCollection: GeoJSONfeatureCollection;
   fields: string[];
   blob: Blob;
   url: string;
+  crs: string;
   info: string;
 }
 
 export interface DataAction {
   DATATYPE: string; 
   DATASOURCE: string;
+  GEOMETRYTYPE: string;
   GEOJSONFEATURECOLLECTION: string;
   FIELDS: string;
   BLOB: string;
   URL: string;
+  CRS: string;
   INFO: string;
 }
 
@@ -107,10 +84,26 @@ export interface ButtonProps {
   textColor: string;
   alertProps: AlertProps;
   handleClick?: MouseEventHandler;
+  modal?: string;
 }
 
 export interface AlertProps {
   id: string;
   text: string;
   alertType: string;
+}
+
+export interface MapContextInterface {
+    scene?: __esri.WebScene;
+    view?: __esri.View;
+    sketch?: __esri.Sketch;
+    graphicsLayer?: __esri.GraphicsLayer;
+}
+
+export type MapAction = {
+    SCENE: string;
+    VIEW: string;
+    SKETCH: string;
+    GRAPHICSLAYER: string;
+    SCENEVIEWGRAPHICS: string;
 }

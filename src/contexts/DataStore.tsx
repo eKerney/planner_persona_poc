@@ -1,59 +1,52 @@
-// DataStore.tsx 
-//
-// Component that holds context of loaded <data></data>
-// Data can be load from file, url, or AGOL
-// In case of file load, data will be stored <directly></directly>
-// For other cases only references to data may be held 
 import { createContext, useReducer } from "react";
-import { Action, DataAction, DataSource, DataType } from "../types";
-
-interface DataStoreInterface {
-  dataType: DataType; 
-  dataSource: DataSource;
-  GeoJSONfeatureCollection: GeoJSONfeatureCollection;
-  fields: string[];
-  blob: Blob;
-  url: string;
-  info: string;
-}
+import { Action, DataAction, DataContextInterface } from "../types"; 
+import { DataSource, DataType, GeometryType } from "../types/enums";
 
 const dataActionType: DataAction = {
   DATATYPE: 'dataType', 
   DATASOURCE: 'dataSource',
+  GEOMETRYTYPE: 'geometryType',
   GEOJSONFEATURECOLLECTION: 'geoJSONfeatureCollection',
   FIELDS: 'fields',
   BLOB: 'blob',
   URL: 'url',
+  CRS: 'crs',
   INFO: 'info',
 }
 
-export const initialDataState: DataStoreInterface = {
-  dataType: DataType.EMPTY,
+export const initialDataState: DataContextInterface = {
+  dataType: DataType.GEOJSON,
   dataSource: DataSource.EMPTY,
+  geometryType: GeometryType.EMPTY,
   GeoJSONfeatureCollection: { type: '', features: [] },
   fields: [],
   blob: new Blob([]),
   url: '',
+  crs: '',
   info: '',
 }
 
 export const DataContext = createContext(initialDataState) 
 
 export const DataStore = ({ children }) => {
-  const [state, dispatch] = useReducer((state: DataStoreInterface, action: Action) => {
+  const [state, dispatch] = useReducer((state: DataContextInterface, action: Action) => {
     switch (action.type) {
       case dataActionType.DATATYPE:
         return {...state, dataType: action.payload}
       case dataActionType.DATASOURCE:
         return {...state, dataSource: action.payload}
+      case dataActionType.GEOMETRYTYPE:
+        return {...state, geometryType: action.payload}
       case dataActionType.GEOJSONFEATURECOLLECTION:
-        return {...state, geoJSONfeatureCollection: action.payload}
+        return {...state, GeoJSONfeatureCollection: action.payload}
       case dataActionType.FIELDS:
         return {...state, fields: action.payload}
       case dataActionType.BLOB:
         return {...state, blob: action.payload}
       case dataActionType.URL:
         return {...state, url: action.payload}
+      case dataActionType.CRS:
+        return {...state, crs: action.payload}
       case dataActionType.INFO:
         return {...state, info: action.payload}
       default:
