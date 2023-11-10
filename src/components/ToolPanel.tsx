@@ -14,8 +14,16 @@ export const ToolPanel = () => {
           textColor="text-dark-grey-200"
           color="bg-deep-sky-500"
           modal="upload"
-          alertProps={{text: "UPLOAD SUCCESS", id:"uploadDialog", alertType: "alert-info"}}
+          alertProps={{text: "UPLOAD SUCCESS", id:"uploadDialog", alertType: "alert"}}
           handleClick={()=>document.getElementById('uploadDialog').showModal()} 
+        />
+        <br/><br/>
+        <Button 
+          text="SEND DATA" 
+          textColor="text-dark-grey-200"
+          color="bg-deep-sky-500"
+          alertProps={{text: "SUCCESSFULLY SUBMITTED FIELDS", id:"submitSuccess", alertType: "alert-info"}}
+          handleClick={()=>document.getElementById('submitSuccess').showModal()} 
         />
         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         <Button 

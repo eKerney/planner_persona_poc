@@ -32,6 +32,20 @@ export interface AppAction {
   CAMERALOCATION: string;
 }
 
+export interface fieldInfos {
+  fieldName: string;
+  label: string;
+}
+
+export interface dataAnalysis {
+  fields: fieldInfos[];
+  analysisField: string;
+  count: number;
+  avg: number;
+  min: number;
+  max: number;
+}
+
 export interface DataContextInterface {
   dataType: DataType; 
   dataSource: DataSource;
@@ -41,7 +55,7 @@ export interface DataContextInterface {
   blob: Blob;
   url: string;
   crs: string;
-  info: string;
+  info: dataAnalysis;
 }
 
 export interface DataAction {

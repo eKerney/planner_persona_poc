@@ -28,7 +28,7 @@ export const initialAppState: AppContextInterface = {
   submitStatus: LoadingStatus.EMPTY,
   approveStatus: LoadingStatus.EMPTY,
   denyStatus: LoadingStatus.EMPTY,
-  basemap: Basemaps.STREETS_NIGHT_VECTOR,
+  basemap: Basemaps.DARK_GRAY,
   cameraLocation: locations['Detroit'],
 }
 

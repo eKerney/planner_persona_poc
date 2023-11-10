@@ -23,8 +23,9 @@ export const initialDataState: DataContextInterface = {
   blob: new Blob([]),
   url: '',
   crs: '',
-  info: '',
+  info: {fields: [], analysisField: '', count: 0, avg: 0, min: 0, max: 0},
 }
+
 
 export const DataContext = createContext(initialDataState) 
 

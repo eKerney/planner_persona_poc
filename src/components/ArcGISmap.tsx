@@ -40,7 +40,7 @@ export const ArcGISmap = ({ children }: {children: any}) => {
           popupEnabled: false,
           opacity: 0.1
         }); 
-        scene.add(OSM3Dbuildings);
+        // scene.add(OSM3Dbuildings);
         // set scene and view context
         mapDispatch({ type: 'sceneViewGraphics', payload: {scene: scene, view: view, graphicsLayer: graphicsLayer }})
         

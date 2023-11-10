@@ -40,9 +40,10 @@ export const AlertModal = ({ id, text, alertType }: AlertProps) => {
 
 export const UploadModal = ({ id, text, alertType }: AlertProps) => {
   return (
-    <dialog id={id} className="modal justify-center">
+    <dialog id={id} className="modal">
       <div className="modal-box p-0">
-        <div className={`alert ${alertType} px-12 py-8`}>
+        <div className={`alert ${alertType}`}>
+          <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
           <span>{UploadAOIpanel(id)}</span>
         </div>
       </div>
@@ -77,22 +78,21 @@ export const UploadAOIpanel = (id: string) => {
   const handleFileUpload = (event) => setFiles(event.target.files);
 
   return  (
-    <div className="control-panel " >
-      <DataLayerPicker />
-        <br/><br/>
+    <div className="control-panel" >
       <input 
         type="file" 
-        className="file-input file-input-bordered w-full max-w-xs text-deep-sky-200" 
+        className="file-input file-input-bordered  w-full max-w-xs" 
         accept='.json,.geojson,.GeoJSON,.GEOJSON'
         onChange={handleFileUpload}
       />
+      <DataLayerPicker />
     </div>
   )    
 }
 
 export const DataLayerPicker = () => {
   return (
-  <select className="select select-info w-full max-w-xs text-deep-sky-200">
+  <select className="select select-info w-full max-w-xs">
     <option disabled selected>SELECT DATA TYPE</option>
     <option>Obstacles</option>
     <option>Parcels</option>
