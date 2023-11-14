@@ -22,6 +22,13 @@ export interface AppContextInterface {
   cameraLocation: CameraPosition;
 }
 
+export interface AppContextInterface2 {
+  dataStatus: LoadingStatus2;
+  currentDataState: DataState;
+  basemap: Basemaps;
+  cameraLocation: CameraPosition;
+}
+
 export interface AppAction {
   DATASTATUS: string;
   UPLOADSTATUS: string;

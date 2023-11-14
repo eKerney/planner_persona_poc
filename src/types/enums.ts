@@ -37,3 +37,23 @@ export enum GeometryType {
   LINESTRING = "LineString",
   EMPTY = "empty",
 } 
+
+export enum DataState {
+  LOADING = "loading",
+  SUCCESS = "success",
+  ERROR = "error",
+  EMPTY = "empty",
+  UNPROCESSED = "unprocessed",
+}
+
+export enum DataStatus {
+  DATAIMPORTED = "Data Imported",
+  GEOMETRVALIDATED = "Geometrty Validated",
+  MAPPREVIEW = "Map Preview",
+  DATASUBMITTED = "Data Submitted",
+  FIELDSRETURNED = "Fields Returned",
+  FIELDSMATCHED = "Fields Matched",
+  DATAAPPROVED = "Data Approved",
+  IMPORTTODATABASE = "Imported to Database",
+  DATADENIED = "Data Denied"
+}

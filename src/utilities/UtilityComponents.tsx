@@ -3,8 +3,9 @@ import { AlertProps, ButtonProps } from "../types";
 import { fileLoader, fileValidator } from './DataLoader';
 import { AppContext } from '../contexts/AppStore';
 import { DataContext } from '../contexts/DataStore';
-import { DataType, LoadingStatus } from '../types/enums';
+import { LoadingStatus } from '../types/enums';
 import { basicDataAnalysis } from './DataAnalysis';
+import { fetchGeoprocessData } from './DataFetcher';
 
 export const Button = ({ text, color, textColor, alertProps, modal="", handleClick=(()=>alert('butt on'))}: ButtonProps) => {
   return ( 
@@ -62,9 +63,10 @@ export const UploadAOIpanel = (id: string) => {
   useEffect(() => console.log(dataContext), [dataContext]);
 
   useEffect(function afterUploadSuccessEffect() {
-    appContext.uploadStatus === LoadingStatus.SUCCESS && document.getElementById(id)?.close() 
-    appContext.uploadStatus === LoadingStatus.SUCCESS && fileValidator(dataContext, dataDispatch);
-    appContext.uploadStatus === LoadingStatus.SUCCESS && basicDataAnalysis(dataContext, dataDispatch, 'AGL');
+    // appContext.uploadStatus === LoadingStatus.SUCCESS && document.getElementById(id)?.close() 
+    // appContext.uploadStatus === LoadingStatus.SUCCESS && fileValidator(dataContext, dataDispatch);
+    // appContext.uploadStatus === LoadingStatus.SUCCESS && basicDataAnalysis(dataContext, dataDispatch, 'AGL');
+    appContext.uploadStatus === LoadingStatus.SUCCESS && fetchGeoprocessData(dataContext);
   }, [appContext.uploadStatus])
 
   useEffect(function fileUploadReader() {
@@ -73,8 +75,13 @@ export const UploadAOIpanel = (id: string) => {
     files.length ? reader.readAsText(files[0]) : console.log('none');
   }, [files])
 
+  // testing file upload here, uncomment handleFileUpload when done
   // @ts-ignore
-  const handleFileUpload = (event) => setFiles(event.target.files);
+  const handleFileUpload = (event) => {
+    appDispatch({ type: 'uploadStatus', payload: LoadingStatus.SUCCESS })
+    document.getElementById('uploadDialog').close()
+  }
+  // const handleFileUpload = (event) => setFiles(event.target.files);
 
   return  (
     <div className="control-panel " >
@@ -93,7 +100,7 @@ export const UploadAOIpanel = (id: string) => {
 export const DataLayerPicker = () => {
   return (
   <select className="select select-info w-full max-w-xs text-deep-sky-200">
-    <option disabled selected>SELECT DATA TYPE</option>
+    <option disabled>SELECT DATA TYPE</option>
     <option>Obstacles</option>
     <option>Parcels</option>
   </select>
