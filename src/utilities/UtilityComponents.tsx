@@ -60,13 +60,13 @@ export const UploadAOIpanel = (id: string) => {
   // @ts-ignore
   const [dataContext, dataDispatch] = useContext(DataContext)
   const [files, setFiles] = useState([]);
-  useEffect(() => console.log(dataContext), [dataContext]);
+  const [form, setForm] = useState();
 
   useEffect(function afterUploadSuccessEffect() {
-    // appContext.uploadStatus === LoadingStatus.SUCCESS && document.getElementById(id)?.close() 
+    appContext.uploadStatus === LoadingStatus.SUCCESS && document.getElementById(id)?.close() 
     // appContext.uploadStatus === LoadingStatus.SUCCESS && fileValidator(dataContext, dataDispatch);
     // appContext.uploadStatus === LoadingStatus.SUCCESS && basicDataAnalysis(dataContext, dataDispatch, 'AGL');
-    appContext.uploadStatus === LoadingStatus.SUCCESS && fetchGeoprocessData(dataContext);
+    appContext.uploadStatus === LoadingStatus.SUCCESS && fetchGeoprocessData(dataContext, form);
   }, [appContext.uploadStatus])
 
   useEffect(function fileUploadReader() {
@@ -76,24 +76,50 @@ export const UploadAOIpanel = (id: string) => {
   }, [files])
 
   // testing file upload here, uncomment handleFileUpload when done
-  // @ts-ignore
-  const handleFileUpload = (event) => {
+
+  const handleFileUpload = (event: any) => {
     appDispatch({ type: 'uploadStatus', payload: LoadingStatus.SUCCESS })
-    document.getElementById('uploadDialog').close()
+    document.getElementById('uploadDialog')?.close()
   }
-  // const handleFileUpload = (event) => setFiles(event.target.files);
+  // const handleFileUpload = (event: any) => setFiles(event.target.files);
+function onFormSubmit(event: any) {
+    event.preventDefault();
+    console.log(event)
+    setForm(event.target);
+    appDispatch({ type: 'uploadStatus', payload: LoadingStatus.SUCCESS })
+    document.getElementById('uploadDialog')?.close()
+}
 
   return  (
-    <div className="control-panel " >
-      <DataLayerPicker />
-        <br/><br/>
-      <input 
-        type="file" 
-        className="file-input file-input-bordered w-full max-w-xs text-deep-sky-200" 
-        accept='.json,.geojson,.GeoJSON,.GEOJSON'
-        onChange={handleFileUpload}
-      />
-    </div>
+    <>
+      <form id="uploadForm" 
+      method="post"
+      name="sdform" 
+      action="https://gis-dev.airspacelink.com/server/rest/services/ETLUpload/GPServer/uploads/upload" 
+      onSubmit={onFormSubmit}
+      encType="multipart/form-data">
+        <table id="parameterTable" className="formTable">
+          <tbody><tr valign="top">
+              <td><label for="file">File:</label></td>
+              <td><input type="file" id="file" name="file" /></td>
+            </tr>
+            <tr valign="top">
+              <td><label for="description">Description:</label></td>
+              <td><textarea id="description" name="description" rows="5" cols="50"></textarea></td>
+            </tr>
+            <tr>
+              <td><label for="f">Format:</label></td>
+              <td><select id="f" name="f">
+                  <option value="html">HTML</option>
+                  <option value="pjson">JSON</option>
+                </select></td>
+            </tr>
+            <tr>
+        <td colspan="2" align="left"><input type="submit" value="Upload Item" /></td>
+            </tr>
+          </tbody></table>
+      </form>
+      </>
   )    
 }
 
@@ -107,3 +133,48 @@ export const DataLayerPicker = () => {
   )
 }
 
+
+    // <div className="control-panel " >
+    //   <DataLayerPicker />
+    //     <br/><br/>
+    //   <input 
+    //     type="file" 
+    //     className="file-input file-input-bordered w-full max-w-xs text-deep-sky-200" 
+    //     accept='.json,.geojson,.GeoJSON,.GEOJSON'
+    //     onChange={handleFileUpload}
+    //   />
+    // </div>
+
+// <form name="sdform" action="/server/rest/services/ETLUpload/GPServer/uploads/upload" method="post" enctype="multipart/form-data">
+//   <table id="parameterTable" class="formTable">
+//     <tbody><tr valign="top">
+//         <td><label for="file">File:</label></td>
+//         <td><input type="file" id="file" name="file"></td>
+//       </tr>
+//       <tr valign="top">
+//         <td><label for="description">Description:</label></td>
+//         <td><textarea id="description" name="description" rows="5" cols="50"></textarea></td>
+//       </tr>
+//       <tr>
+//         <td><label for="f">Format:</label></td>
+//         <td><select id="f" name="f">
+//             <option value="html">HTML</option>
+//             <option value="pjson">JSON</option>
+//           </select></td>
+//       </tr>
+//       <tr>
+//         <td colspan="2" align="left"><input type="submit" value="Upload Item"></td>
+//       </tr>
+//     </tbody></table>
+// </form>
+
+    // <div className="control-panel " >
+    //   <form encType="multipart/form-data" method="post" id="uploadForm">
+    //      <div className="field">
+    //         <label className="file-upload">
+    //            <span><strong>Add File</strong></span>
+    //            <input type="file" name="file" id="inFile" onChange={handleFileUpload} />
+    //         </label>
+    //      </div>
+    //   </form>
+    // </div>

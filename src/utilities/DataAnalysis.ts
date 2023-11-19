@@ -19,7 +19,7 @@ export const basicDataAnalysis = (dataContext: DataContextInterface, dataDispatc
         : stats.min;
     stats.max = val > stats.max ? val : stats.max;
     stats.avg = stats.sum/stats.count;
-    console.log(stats.min, val)
+    // console.log(stats.min, val)
   })
   dataDispatch({ type: 'info', payload: {
     fields: stats.fields, 

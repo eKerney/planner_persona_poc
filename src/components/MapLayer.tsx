@@ -99,7 +99,7 @@ export const MapLayer = () => {
   }
   useEffect(() => zoomToLayer(surfaceMapReference),[surfaceMapReference])
   useLayoutEffect(() => {
-    console.log('maplayer', dataContext.info)
+    // console.log('maplayer', dataContext.info)
     addLayerToMap(point3Drenderer, obstaclesPopup)
   }, [dataContext.info]);
 

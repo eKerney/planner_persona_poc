@@ -6,7 +6,7 @@ export const fileLoader = (rawData: any, appContext: AppContextInterface, appDis
   switch (dataContext.dataType) {
     case DataType.GEOJSON:
       const parsedGeoJSON = JSON.parse(rawData)
-      console.log(parsedGeoJSON);
+      // console.log(parsedGeoJSON);
       dataDispatch({ type: 'geoJSONfeatureCollection', payload: parsedGeoJSON })
 
       const blobData = new Blob([JSON.stringify(parsedGeoJSON)], { type: "application/json" });
