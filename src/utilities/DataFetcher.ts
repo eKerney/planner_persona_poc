@@ -18,7 +18,7 @@ const runGeoprocessingTool = (itemID: string) => {
     console.log("ArcGIS Server job ID: ", jobInfo.jobId);
     const options = { interval: 1500, statusCallback: (j: any) => console.log("Job Status: ", j.jobStatus)};
     jobInfo.waitForJobCompletion(options).then(() => {
-      jobInfo.fetchResultData("Return_df_Json").then((data) => console.log(data.value))
+      // jobInfo.fetchResultData("Return_df_Json").then((data) => console.log(data.value))
       jobInfo.fetchResultData("Return_Fields").then((data) => console.log(data.value))
       // jobInfo.fetchResultData("Preprocess_Return").then((data) => console.log(data.value))
     });
@@ -50,15 +50,3 @@ const runGeoprocessingTool = (itemID: string) => {
 
 
 }
-// dataForm.append("attachment", dataContext.GeoJSONfeatureCollection, "obstacles.geojson")
-// dataForm.append("attachment", JSON.stringify(dataContext.GeoJSONfeatureCollection))
-// console.log(dataForm);
-// let form = new FormData();
-// form.append('file', JSON.stringify(dataContext.GeoJSONfeatureCollection));
-// form.append("f", "json");
-// form.append("title", "title");
-// form.append("name", "detroit_obstacles.geojson");
-// form.append("type", "json");
-// form.append("token", this.token);
-// form.append("filename", "detroit_obstacles.geojson");
-

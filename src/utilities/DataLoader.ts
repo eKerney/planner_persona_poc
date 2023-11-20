@@ -2,6 +2,7 @@ import { AppContextInterface, DataContextInterface } from "../types";
 import { DataType, GeometryType, LoadingStatus } from "../types/enums";
 
 export const fileLoader = (rawData: any, appContext: AppContextInterface, appDispatch: any, dataContext: DataContextInterface, dataDispatch: any) => {
+  console.log('fileLoader');
   appDispatch({ type: 'uploadStatus', payload: LoadingStatus.LOADING });
   switch (dataContext.dataType) {
     case DataType.GEOJSON:

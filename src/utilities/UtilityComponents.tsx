@@ -64,29 +64,30 @@ export const UploadAOIpanel = (id: string) => {
 
   useEffect(function afterUploadSuccessEffect() {
     appContext.uploadStatus === LoadingStatus.SUCCESS && document.getElementById(id)?.close() 
-    // appContext.uploadStatus === LoadingStatus.SUCCESS && fileValidator(dataContext, dataDispatch);
-    // appContext.uploadStatus === LoadingStatus.SUCCESS && basicDataAnalysis(dataContext, dataDispatch, 'AGL');
+    appContext.uploadStatus === LoadingStatus.SUCCESS && fileValidator(dataContext, dataDispatch);
+    appContext.uploadStatus === LoadingStatus.SUCCESS && basicDataAnalysis(dataContext, dataDispatch, 'AGL');
     appContext.uploadStatus === LoadingStatus.SUCCESS && fetchGeoprocessData(dataContext, form);
   }, [appContext.uploadStatus])
 
   useEffect(function fileUploadReader() {
+    console.log('fileReader');
+    console.log(files);
     const reader = new FileReader();
     reader.onload = (evt) => fileLoader(evt.target?.result, appContext, appDispatch, dataContext, dataDispatch);
-    files.length ? reader.readAsText(files[0]) : console.log('none');
+    files.length ? reader.readAsText(files[0]) : '';
   }, [files])
 
-  // testing file upload here, uncomment handleFileUpload when done
-
-  const handleFileUpload = (event: any) => {
-    appDispatch({ type: 'uploadStatus', payload: LoadingStatus.SUCCESS })
-    document.getElementById('uploadDialog')?.close()
-  }
+  // const handleFileUpload = (event: any) => {
+  //   appDispatch({ type: 'uploadStatus', payload: LoadingStatus.SUCCESS })
+  //   document.getElementById('uploadDialog')?.close()
+  // }
   // const handleFileUpload = (event: any) => setFiles(event.target.files);
 function onFormSubmit(event: any) {
     event.preventDefault();
-    console.log(event)
+    console.log('event.target.file.files');
+    console.log(event.target.file.files);
     setForm(event.target);
-    appDispatch({ type: 'uploadStatus', payload: LoadingStatus.SUCCESS })
+    setFiles(event.target.file.files);
     document.getElementById('uploadDialog')?.close()
 }
 
@@ -145,36 +146,3 @@ export const DataLayerPicker = () => {
     //   />
     // </div>
 
-// <form name="sdform" action="/server/rest/services/ETLUpload/GPServer/uploads/upload" method="post" enctype="multipart/form-data">
-//   <table id="parameterTable" class="formTable">
-//     <tbody><tr valign="top">
-//         <td><label for="file">File:</label></td>
-//         <td><input type="file" id="file" name="file"></td>
-//       </tr>
-//       <tr valign="top">
-//         <td><label for="description">Description:</label></td>
-//         <td><textarea id="description" name="description" rows="5" cols="50"></textarea></td>
-//       </tr>
-//       <tr>
-//         <td><label for="f">Format:</label></td>
-//         <td><select id="f" name="f">
-//             <option value="html">HTML</option>
-//             <option value="pjson">JSON</option>
-//           </select></td>
-//       </tr>
-//       <tr>
-//         <td colspan="2" align="left"><input type="submit" value="Upload Item"></td>
-//       </tr>
-//     </tbody></table>
-// </form>
-
-    // <div className="control-panel " >
-    //   <form encType="multipart/form-data" method="post" id="uploadForm">
-    //      <div className="field">
-    //         <label className="file-upload">
-    //            <span><strong>Add File</strong></span>
-    //            <input type="file" name="file" id="inFile" onChange={handleFileUpload} />
-    //         </label>
-    //      </div>
-    //   </form>
-    // </div>
