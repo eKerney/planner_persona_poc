@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Basemaps, DataStatus, DataType, GeometryType, LoadingStatus } from "./enums";
+import { AppImportType, Basemaps, DataStatus, DataType, GeometryType, LoadingStatus } from "./enums";
 
 export type Action = {
     type: string
@@ -23,6 +23,7 @@ export interface AppContextInterface {
 }
 
 export interface AppContextInterface2 {
+  appImportType: AppImportType; 
   dataStatus: LoadingStatus2;
   currentDataState: DataState;
   basemap: Basemaps;
@@ -127,4 +128,13 @@ export type MapAction = {
     SKETCH: string;
     GRAPHICSLAYER: string;
     SCENEVIEWGRAPHICS: string;
+}
+
+export type GeoprocessingParams = {
+  FIle: Object;
+  Data_Type: string;
+  Ingest_Trigger: Boolean;
+  Preprocess_Trigger: Boolean;
+  Upload_Trigger: Boolen;
+  Field_Map: Boolean;
 }

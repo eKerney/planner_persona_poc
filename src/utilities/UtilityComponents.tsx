@@ -70,57 +70,58 @@ export const UploadAOIpanel = (id: string) => {
   }, [appContext.uploadStatus])
 
   useEffect(function fileUploadReader() {
-    console.log('fileReader');
-    console.log(files);
     const reader = new FileReader();
     reader.onload = (evt) => fileLoader(evt.target?.result, appContext, appDispatch, dataContext, dataDispatch);
     files.length ? reader.readAsText(files[0]) : '';
   }, [files])
 
-  // const handleFileUpload = (event: any) => {
-  //   appDispatch({ type: 'uploadStatus', payload: LoadingStatus.SUCCESS })
-  //   document.getElementById('uploadDialog')?.close()
-  // }
-  // const handleFileUpload = (event: any) => setFiles(event.target.files);
-function onFormSubmit(event: any) {
+  function onFormSubmit(event: any) {
     event.preventDefault();
     console.log('event.target.file.files');
     console.log(event.target.file.files);
     setForm(event.target);
     setFiles(event.target.file.files);
     document.getElementById('uploadDialog')?.close()
-}
+  }
 
   return  (
     <>
+      <DataLayerPicker />
+      <br/>
+      <br/>
       <form id="uploadForm" 
-      method="post"
       name="sdform" 
-      action="https://gis-dev.airspacelink.com/server/rest/services/ETLUpload/GPServer/uploads/upload" 
       onSubmit={onFormSubmit}
       encType="multipart/form-data">
         <table id="parameterTable" className="formTable">
-          <tbody><tr valign="top">
-              <td><label for="file">File:</label></td>
-              <td><input type="file" id="file" name="file" /></td>
+          <tbody><tr >
+              <td><label ></label></td>
+              <td>
+              <input 
+                type="file" 
+                id="file" 
+                name="file" 
+                className="file-input file-input-bordered w-full max-w-xs text-deep-sky-200" 
+              /></td>
             </tr>
-            <tr valign="top">
-              <td><label for="description">Description:</label></td>
-              <td><textarea id="description" name="description" rows="5" cols="50"></textarea></td>
-            </tr>
-            <tr>
-              <td><label for="f">Format:</label></td>
-              <td><select id="f" name="f">
-                  <option value="html">HTML</option>
+            <tr style={{display: "none"}}>
+              <td><label >Format:</label></td>
+              <td><select  id="f" name="f">
                   <option value="pjson">JSON</option>
                 </select></td>
             </tr>
             <tr>
-        <td colspan="2" align="left"><input type="submit" value="Upload Item" /></td>
+        <td colSpan={2} align="left">
+        <br/>
+        <input 
+          type="submit" 
+          value="Upload Item" 
+          className="file-input file-input-bordered w-full max-w-xs text-deep-sky-200" 
+        /></td>
             </tr>
           </tbody></table>
       </form>
-      </>
+    </>
   )    
 }
 
@@ -134,7 +135,46 @@ export const DataLayerPicker = () => {
   )
 }
 
-
+// action="https://gis-dev.airspacelink.com/server/rest/services/ETLUpload/GPServer/uploads/upload" 
+// method="post"
+export const UploadPanelForm = (onFormSubmit: any) => {
+  return  (
+    <>
+      <form id="uploadForm" 
+      name="sdform" 
+      onSubmit={(() => onFormSubmit)}
+      encType="multipart/form-data">
+        <table id="parameterTable" className="formTable">
+          <tbody><tr >
+              <td><label ></label></td>
+              <td>
+              <input 
+                type="file" 
+                id="file" 
+                name="file" 
+                className="file-input file-input-bordered w-full max-w-xs text-deep-sky-200" 
+              /></td>
+            </tr>
+            <tr style={{display: "none"}}>
+              <td><label >Format:</label></td>
+              <td><select  id="f" name="f">
+                  <option value="pjson">JSON</option>
+                </select></td>
+            </tr>
+            <tr>
+        <td colSpan={2} align="left">
+        <br/>
+        <input 
+          type="submit" 
+          value="Upload Item" 
+          className="file-input file-input-bordered w-full max-w-xs text-deep-sky-200" 
+        /></td>
+            </tr>
+          </tbody></table>
+      </form>
+    </>
+  )    
+}
     // <div className="control-panel " >
     //   <DataLayerPicker />
     //     <br/><br/>

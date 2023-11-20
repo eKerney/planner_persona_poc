@@ -57,3 +57,8 @@ export enum DataStatus {
   IMPORTTODATABASE = "Imported to Database",
   DATADENIED = "Data Denied"
 }
+
+export enum AppImportType {
+  ESRI = "ESRI",
+  STANDARD = "STANDARD",
+}
