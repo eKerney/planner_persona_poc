@@ -21,7 +21,7 @@ export const fetchGeoprocessData = (dataContext: DataContextInterface, formData:
     gpParams.FIle = { itemID: itemID };
     geoprocessor.submitJob((`${baseGPurl}${gpToolURL}`), gpParams).then((jobInfo) => {
      console.log("ArcGIS Server job ID: ", jobInfo.jobId);
-      const options = { interval: 1500, statusCallback: (j: any) => console.log("Job Status: ", j.jobStatus)};
+      const options = { interval: 1500, statusCallback: (j: any) => console.log("Job Status: ", j.jobStatus, j)};
       jobInfo.waitForJobCompletion(options).then(() => {
         jobInfo.fetchResultData("Return_Fields").then((data) => console.log(data.value))
         // jobInfo.fetchResultData("Return_df_Json").then((data) => console.log(data.value))

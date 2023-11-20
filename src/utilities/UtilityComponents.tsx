@@ -1,11 +1,11 @@
 import {useState, useEffect, useContext } from 'react';
-import { AlertProps, ButtonProps } from "../types";
+import { AlertProps, AppContextInterface2, ButtonProps } from "../types";
 import { fileLoader, fileValidator } from './DataLoader';
-import { AppContext } from '../contexts/AppStore';
 import { DataContext } from '../contexts/DataStore';
 import { LoadingStatus } from '../types/enums';
 import { basicDataAnalysis } from './DataAnalysis';
 import { fetchGeoprocessData } from './DataFetcher';
+import { AppContext2 } from '../contexts/AppStore2';
 
 export const Button = ({ text, color, textColor, alertProps, modal="", handleClick=(()=>alert('butt on'))}: ButtonProps) => {
   return ( 
@@ -56,18 +56,18 @@ export const UploadModal = ({ id, text, alertType }: AlertProps) => {
 
 export const UploadAOIpanel = (id: string) => {
   // @ts-ignore
-  const [appContext, appDispatch] = useContext(AppContext)
+  const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
   // @ts-ignore
   const [dataContext, dataDispatch] = useContext(DataContext)
   const [files, setFiles] = useState([]);
   const [form, setForm] = useState();
 
   useEffect(function afterUploadSuccessEffect() {
-    appContext.uploadStatus === LoadingStatus.SUCCESS && document.getElementById(id)?.close() 
-    appContext.uploadStatus === LoadingStatus.SUCCESS && fileValidator(dataContext, dataDispatch);
-    appContext.uploadStatus === LoadingStatus.SUCCESS && basicDataAnalysis(dataContext, dataDispatch, 'AGL');
-    appContext.uploadStatus === LoadingStatus.SUCCESS && fetchGeoprocessData(dataContext, form);
-  }, [appContext.uploadStatus])
+    appContext.dataStatus  === LoadingStatus.SUCCESS && document.getElementById(id)?.close() 
+    appContext.dataStatus === LoadingStatus.SUCCESS && fileValidator(dataContext, dataDispatch);
+    appContext.dataStatus === LoadingStatus.SUCCESS && basicDataAnalysis(dataContext, dataDispatch, 'AGL');
+    appContext.dataStatus === LoadingStatus.SUCCESS && fetchGeoprocessData(dataContext, form);
+  }, [appContext.dataStatus])
 
   useEffect(function fileUploadReader() {
     const reader = new FileReader();

@@ -4,12 +4,12 @@ import SceneView from "@arcgis/core/views/SceneView";
 import Search from "@arcgis/core/widgets/Search";
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
 import SceneLayer from "@arcgis/core/layers/SceneLayer";
-import { AppContext } from "../contexts/AppStore";
 import { MapContext } from "../contexts/MapStore";
+import { AppContext2 } from "../contexts/AppStore2";
 
 export const ArcGISmap = ({ children }: {children: any}) => {
   // @ts-ignore
-  const [appContext, appDispatch] = useContext(AppContext);
+  const [appContext, appDispatch] = useContext(AppContext2);
   // @ts-ignore
   const [mapContext, mapDispatch] = useContext(MapContext);
 
@@ -38,9 +38,9 @@ export const ArcGISmap = ({ children }: {children: any}) => {
           const OSM3Dbuildings = new SceneLayer({
           url: 'https://basemaps3d.arcgis.com/arcgis/rest/services/OpenStreetMap3D_Buildings_v1/SceneServer',
           popupEnabled: false,
-          opacity: 0.1
+          opacity: 0.05
         }); 
-        // scene.add(OSM3Dbuildings);
+        scene.add(OSM3Dbuildings);
         // set scene and view context
         mapDispatch({ type: 'sceneViewGraphics', payload: {scene: scene, view: view, graphicsLayer: graphicsLayer }})
         

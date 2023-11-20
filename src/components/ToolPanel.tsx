@@ -1,4 +1,4 @@
-import { Button, UploadAOIpanel } from "../utilities/UtilityComponents";
+import { Button } from "../utilities/UtilityComponents";
 
 export const ToolPanel = () => {
   return (
@@ -9,6 +9,15 @@ export const ToolPanel = () => {
       </div> 
       <div className="drawer-side">
         <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label> 
+        <Button 
+          text="IMPORT DATA" 
+          textColor="text-dark-grey-200"
+          color="bg-deep-sky-500"
+          modal="upload"
+          alertProps={{text: "UPLOAD SUCCESS", id:"uploadDialog", alertType: "alert"}}
+          handleClick={()=>document.getElementById('uploadDialog').showModal()} 
+        />
+        <br/><br/>
         <Button 
           text="UPLOAD DATA" 
           textColor="text-dark-grey-200"

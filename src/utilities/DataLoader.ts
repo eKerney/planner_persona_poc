@@ -1,32 +1,32 @@
-import { AppContextInterface, DataContextInterface } from "../types";
-import { DataType, GeometryType, LoadingStatus } from "../types/enums";
+import { AppContextInterface2, DataContextInterface } from "../types";
+import { DataStatus, DataType, GeometryType, LoadingStatus } from "../types/enums";
 
-export const fileLoader = (rawData: any, appContext: AppContextInterface, appDispatch: any, dataContext: DataContextInterface, dataDispatch: any) => {
-  console.log('fileLoader');
-  appDispatch({ type: 'uploadStatus', payload: LoadingStatus.LOADING });
+export const fileLoader = (rawData: any, appContext: AppContextInterface2, appDispatch: any, dataContext: DataContextInterface, dataDispatch: any) => {
+  appDispatch({ type: 'dataStatus', payload: LoadingStatus.LOADING });
+
   switch (dataContext.dataType) {
     case DataType.GEOJSON:
       const parsedGeoJSON = JSON.parse(rawData)
-      // console.log(parsedGeoJSON);
       dataDispatch({ type: 'geoJSONfeatureCollection', payload: parsedGeoJSON })
 
       const blobData = new Blob([JSON.stringify(parsedGeoJSON)], { type: "application/json" });
       dataDispatch({ type: 'blob', payload: URL.createObjectURL(blobData) })
       
-      appDispatch({ type: 'uploadStatus', payload: LoadingStatus.SUCCESS })
-      appDispatch({ type: 'dataStatus', payload: LoadingStatus.UNPROCESSED })
+      appDispatch({ type: 'currentDataState', payload: DataStatus.DATAIMPORTED })
+      appDispatch({ type: 'dataStatus', payload: LoadingStatus.SUCCESS })
       // fileValidator(dataContext, dataDispatch);
       break;
     case DataType.KML:
       const parsedKML = JSON.parse(rawData)
       dataDispatch({ type: 'geoJSONfeatureCollection', payload: parsedKML })
-      appDispatch({ type: 'dataStatus', payload: LoadingStatus.UNPROCESSED })
-      appDispatch({ type: 'uploadStatus', payload: LoadingStatus.SUCCESS })
+      appDispatch({ type: 'currentDataState', payload: DataStatus.DATAIMPORTED })
+      appDispatch({ type: 'dataStatus', payload: LoadingStatus.SUCCESS })
       break;
     default:
         return LoadingStatus.ERROR 
     }
-    return LoadingStatus.UNPROCESSED
+
+    return LoadingStatus.SUCCESS
 }
 
 export const fileValidator = (dataContext: DataContextInterface, dataDispatch: any) => {

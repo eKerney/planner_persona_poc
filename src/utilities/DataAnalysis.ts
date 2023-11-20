@@ -1,6 +1,5 @@
 import { DataContextInterface, fieldInfos } from "../types";
 
-
 export const basicDataAnalysis = (dataContext: DataContextInterface, dataDispatch: any, analysisField: string) => {
 
   let stats: {fields: fieldInfos[], count: number, avg: number, min: number, max: number, sum: number} = 
@@ -19,7 +18,6 @@ export const basicDataAnalysis = (dataContext: DataContextInterface, dataDispatc
         : stats.min;
     stats.max = val > stats.max ? val : stats.max;
     stats.avg = stats.sum/stats.count;
-    // console.log(stats.min, val)
   })
   dataDispatch({ type: 'info', payload: {
     fields: stats.fields, 

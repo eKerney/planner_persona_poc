@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { AppImportType, Basemaps, DataStatus, DataType, GeometryType, LoadingStatus } from "./enums";
 
 export type Action = {
@@ -22,20 +21,28 @@ export interface AppContextInterface {
   cameraLocation: CameraPosition;
 }
 
-export interface AppContextInterface2 {
-  appImportType: AppImportType; 
-  dataStatus: LoadingStatus2;
-  currentDataState: DataState;
-  basemap: Basemaps;
-  cameraLocation: CameraPosition;
-}
-
 export interface AppAction {
   DATASTATUS: string;
   UPLOADSTATUS: string;
   SUBMITSTATUS: string;
   APPROVESTATUS: string;
   DENYSTATUS: string;
+  BASEMAP: string;
+  CAMERALOCATION: string;
+}
+
+export interface AppContextInterface2 {
+  appImportType: AppImportType; 
+  dataStatus: LoadingStatus;
+  currentDataState: DataStatus;
+  basemap: Basemaps;
+  cameraLocation: CameraPosition;
+}
+
+export interface AppAction2 {
+  APPIMPORTTYPE: string;
+  DATASTATUS: string;
+  CURRENTDATASTATE: string;
   BASEMAP: string;
   CAMERALOCATION: string;
 }

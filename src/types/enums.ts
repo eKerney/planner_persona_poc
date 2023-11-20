@@ -38,14 +38,6 @@ export enum GeometryType {
   EMPTY = "empty",
 } 
 
-export enum DataState {
-  LOADING = "loading",
-  SUCCESS = "success",
-  ERROR = "error",
-  EMPTY = "empty",
-  UNPROCESSED = "unprocessed",
-}
-
 export enum DataStatus {
   DATAIMPORTED = "Data Imported",
   GEOMETRVALIDATED = "Geometrty Validated",
