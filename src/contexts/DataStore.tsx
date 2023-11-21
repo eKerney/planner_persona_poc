@@ -3,6 +3,7 @@ import { Action, DataAction, DataContextInterface } from "../types";
 import { DataSource, DataType, GeometryType } from "../types/enums";
 
 const dataActionType: DataAction = {
+  DATAFORM: 'dataForm',
   DATATYPE: 'dataType', 
   DATASOURCE: 'dataSource',
   GEOMETRYTYPE: 'geometryType',
@@ -12,9 +13,11 @@ const dataActionType: DataAction = {
   URL: 'url',
   CRS: 'crs',
   INFO: 'info',
+  GPINGESTRETURN: 'gpIngestReturn'
 }
 
 export const initialDataState: DataContextInterface = {
+  dataForm: document.createElement("form"),
   dataType: DataType.GEOJSON,
   dataSource: DataSource.EMPTY,
   geometryType: GeometryType.EMPTY,
@@ -24,6 +27,7 @@ export const initialDataState: DataContextInterface = {
   url: '',
   crs: '',
   info: {fields: [], analysisField: '', count: 0, avg: 0, min: 0, max: 0},
+  gpIngestReturn: { Return_Fields: [], Return_df_Json: {} }
 }
 
 
@@ -32,6 +36,8 @@ export const DataContext = createContext(initialDataState)
 export const DataStore = ({ children }) => {
   const [state, dispatch] = useReducer((state: DataContextInterface, action: Action) => {
     switch (action.type) {
+      case dataActionType.DATAFORM:
+        return {...state, dataForm: action.payload}
       case dataActionType.DATATYPE:
         return {...state, dataType: action.payload}
       case dataActionType.DATASOURCE:
@@ -50,6 +56,8 @@ export const DataStore = ({ children }) => {
         return {...state, crs: action.payload}
       case dataActionType.INFO:
         return {...state, info: action.payload}
+      case dataActionType.GPINGESTRETURN:
+        return {...state, gpIngestReturn: action.payload}
       default:
         return state
     }

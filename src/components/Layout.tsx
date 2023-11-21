@@ -1,4 +1,5 @@
 import { LayoutProps } from "../types";
+import { Spinner } from "../utilities/UtilityComponents";
 
 export const RootLayout = ({ ArcMap, ToolPanel }: LayoutProps) => {
   return (
@@ -8,6 +9,7 @@ export const RootLayout = ({ ArcMap, ToolPanel }: LayoutProps) => {
             </div>
             <div className='rounded-lg shadow-xl h-screen col-span-9 grid grid-rows-6 gap-4 '>
               <div id='topNav' className='border border-deep-sky-500 border-2 rounded-lg shadow-xl row-span-1 '>
+                  <Spinner />
               </div>
               <div className='rounded-lg shadow-xl row-span-5  grid grid-cols-6 grid-rows-4 gap-2'> 
                 <div className='border border-deep-sky-400 border-4 rounded-lg shadow-xl col-span-6 row-span-4 z-50'>

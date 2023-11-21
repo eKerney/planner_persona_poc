@@ -61,7 +61,13 @@ export interface dataAnalysis {
   max: number;
 }
 
+export type GPingestReturn = {
+  Return_Fields: string[];
+  Return_df_Json: object;
+}
+
 export interface DataContextInterface {
+  dataForm: HTMLFormElement;
   dataType: DataType; 
   dataSource: DataSource;
   geometryType: GeometryType;
@@ -71,9 +77,11 @@ export interface DataContextInterface {
   url: string;
   crs: string;
   info: dataAnalysis;
+  gpIngestReturn: GPingestReturn;
 }
 
 export interface DataAction {
+  DATAFORM: string;
   DATATYPE: string; 
   DATASOURCE: string;
   GEOMETRYTYPE: string;
@@ -83,6 +91,7 @@ export interface DataAction {
   URL: string;
   CRS: string;
   INFO: string;
+  GPINGESTRETURN: string;
 }
 
 export type GeoJSONprops = {
@@ -114,6 +123,7 @@ export interface ButtonProps {
   alertProps: AlertProps;
   handleClick?: MouseEventHandler;
   modal?: string;
+  active?: string;
 }
 
 export interface AlertProps {

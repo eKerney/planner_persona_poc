@@ -1,8 +1,9 @@
 import * as geoprocessor from "@arcgis/core/rest/geoprocessor.js";
 import esriRequest from "@arcgis/core/request.js";
-import { DataContextInterface, GeoprocessingParams } from "../types";
+import { AppContextInterface2, DataContextInterface, GPingestReturn, GeoprocessingParams, PreprocessReturn } from "../types";
+import { DataStatus, LoadingStatus } from "../types/enums";
 
-export const fetchGeoprocessData = (dataContext: DataContextInterface, formData: any) => {
+export const fetchGeoprocessData = (dataContext: DataContextInterface, dataDispatch: any, appContext: AppContextInterface2, appDispatch: any, formData: any) => {
   // TODO: Parameterize these routes 
   const baseGPurl = "https://gis-dev.airspacelink.com/server/rest/services/ETLUpload/GPServer";
   const gpToolURL = "/etl_upload";
@@ -19,18 +20,28 @@ export const fetchGeoprocessData = (dataContext: DataContextInterface, formData:
 
   const runGeoprocessingUpload = (baseGPurl: string, gpToolURL: string, gpParams: GeoprocessingParams, itemID: string,) => {
     gpParams.FIle = { itemID: itemID };
+
     geoprocessor.submitJob((`${baseGPurl}${gpToolURL}`), gpParams).then((jobInfo) => {
+
      console.log("ArcGIS Server job ID: ", jobInfo.jobId);
       const options = { interval: 1500, statusCallback: (j: any) => console.log("Job Status: ", j.jobStatus, j)};
+
       jobInfo.waitForJobCompletion(options).then(() => {
-        jobInfo.fetchResultData("Return_Fields").then((data) => console.log(data.value))
-        // jobInfo.fetchResultData("Return_df_Json").then((data) => console.log(data.value))
-        // jobInfo.fetchResultData("Preprocess_Return").then((data) => console.log(data.value))
+        const gpIngestReturn: GPingestReturn = {Return_Fields: [], Return_df_Json: {}}
+
+        jobInfo.fetchResultData("Return_Fields").then((data) => gpIngestReturn.Return_Fields = data.value)
+        jobInfo.fetchResultData("Return_df_Json").then((data) => gpIngestReturn.Return_df_Json = data.value)
+
+        dataDispatch({ type: 'gpIngestReturn', payload: gpIngestReturn })
+        appDispatch({ type: 'dataStatus', payload: LoadingStatus.SUCCESS })
       });
     });
   }
 
   const esriRequestUpload = (baseGPurl: string, gpUploadURL: string, formData: HTMLFormElement) => {
+    console.log('esriRequest')
+    appDispatch({ type: 'dataStatus', payload: LoadingStatus.LOADING })
+    appDispatch({ type: 'currentDataState', payload: DataStatus.DATASUBMITTED })
     const uploadSucceeded = (response: any) => {
       const itemID = response["data"]["item"].itemID;
       console.log("File upload successful, item ID: ", itemID);
