@@ -1,9 +1,9 @@
 import { createContext, useReducer } from "react";
 import { Action, AppAction2, AppContextInterface2, CameraPosition } from "../types";
-import { AppImportType, Basemaps, DataStatus, LoadingStatus } from '../types/enums'
+import { Basemaps, DataStatus, LoadingStatus, RequestType } from '../types/enums'
 
 const appActionType: AppAction2 = {
-  APPIMPORTTYPE: 'appImportType',
+  REQUESTTYPE: 'requestType',
   DATASTATUS: 'dataStatus',
   CURRENTDATASTATE: 'currentDataStatus',
   BASEMAP: 'basemap',
@@ -21,7 +21,7 @@ const locations: {[key: string]: CameraPosition} = {
 }
 
 export const initialAppState: AppContextInterface2 = {
-  appImportType: AppImportType.ESRI,
+  requestType: RequestType.INGEST,
   dataStatus: LoadingStatus.EMPTY,
   currentDataState: DataStatus.DATAIMPORTED,
   basemap: Basemaps.DARK_GRAY,
@@ -33,8 +33,8 @@ export const AppContext2 = createContext(initialAppState)
 export const AppStore2 = ({ children }) => {
   const [state, dispatch] = useReducer((state: AppContextInterface2, action: Action): AppContextInterface2 => {
     switch (action.type) {
-      case appActionType.APPIMPORTTYPE:
-        return {...state, appImportType: action.payload}
+      case appActionType.REQUESTTYPE:
+        return {...state, requestType: action.payload}
       case appActionType.DATASTATUS:
         return {...state, dataStatus: action.payload}
       case appActionType.CURRENTDATASTATE:

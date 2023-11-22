@@ -1,4 +1,4 @@
-import { Button, ShowImportSuccessModal, Spinner, UploadButton } from "../utilities/UtilityComponents";
+import { Button, PreprocessButton, ShowImportSuccessModal, UploadButton } from "../utilities/UtilityComponents";
 
 export const ToolPanel = () => {
   return (
@@ -28,13 +28,12 @@ export const ToolPanel = () => {
           active="btn-active"
         />
         <br/><br/>
-        <Button 
-          text="SEND DATA" 
+        <PreprocessButton
+          text="RETURN FIELDS" 
           textColor="text-deep-sky-200"
           color="bg-deep-sky-500"
           alertProps={{text: "SUCCESSFULLY SUBMITTED FIELDS", id:"submitSuccess", alertType: "alert-info"}}
-          active="btn-disabled"
-          handleClick={()=>document.getElementById('submitSuccess').showModal()} 
+          active="btn-active"
         />
         <br/><br/>
         <Button 

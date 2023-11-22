@@ -27,7 +27,7 @@ export const initialDataState: DataContextInterface = {
   url: '',
   crs: '',
   info: {fields: [], analysisField: '', count: 0, avg: 0, min: 0, max: 0},
-  gpIngestReturn: { Return_Fields: [], Return_df_Json: {} }
+  gpIngestReturn: { Return_Fields: '', Return_df_Json: '', Return_Req_Fields: '' }
 }
 
 

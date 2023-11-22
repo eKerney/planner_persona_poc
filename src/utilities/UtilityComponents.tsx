@@ -1,12 +1,11 @@
-import {useState, useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { AlertProps, AppContextInterface2, ButtonProps } from "../types";
-import { fileLoader, fileValidator } from './DataLoader';
 import { DataContext } from '../contexts/DataStore';
-import { DataStatus, LoadingStatus } from '../types/enums';
-import { basicDataAnalysis } from './DataAnalysis';
+import { DataStatus, LoadingStatus, RequestType } from '../types/enums';
 import { fetchGeoprocessData } from './DataFetcher';
 import { AppContext2 } from '../contexts/AppStore2';
 import spinnerGif from '../assets/1496.gif'
+import { ImportDataPanel } from './ImportDataPanel';
 
 export const ShowImportSuccessModal = () => {
   // @ts-ignore
@@ -21,9 +20,36 @@ export const UploadButton = ({ text, color, textColor, alertProps, active="btn-a
   const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
   // @ts-ignore
   const [dataContext, dataDispatch] = useContext(DataContext)
+  appDispatch({ type: 'requestType', payload: RequestType.INGEST })
   console.log('UploadButton', appContext.currentDataState);
   console.log(active);
   const handleClick = () => fetchGeoprocessData(dataContext, dataDispatch, appContext, appDispatch, dataContext.dataForm);
+  useEffect(() => {
+    active = appContext.currentDataState === DataStatus.DATASUBMITTED 
+               ? 'btn-active'
+               : 'btn-disabled'
+    console.log(active);
+  }, [appContext.currentDataState])
+  return (
+  <>
+    <button 
+      className={`btn rounded btn-wide opacity-80 ${color} ${active}`}
+      onClick={handleClick}
+    >
+      <p className={textColor}>{text}</p>
+    </button>
+  </>
+  )
+}
+
+export const PreprocessButton = ({ text, color, textColor, alertProps, active="btn-active", modal="" }) => {
+  // @ts-ignore
+  const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
+  // @ts-ignore
+  const [dataContext, dataDispatch] = useContext(DataContext)
+  appDispatch({ type: 'requestType', payload: RequestType.PREPROCESS })
+  console.log('PreprocessButton', appContext.currentDataState);
+  const handleClick = () => fetchGeoprocessData(dataContext, dataDispatch, appContext, appDispatch, );
   useEffect(() => {
     active = appContext.currentDataState === DataStatus.DATASUBMITTED 
                ? 'btn-active'
@@ -47,8 +73,6 @@ export const Button = ({ text, color, textColor, alertProps, active="btn-active"
   <>
     {modal === "import" 
       ? <ImportModal text={alertProps.text} id={alertProps.id} alertType={alertProps.alertType} /> 
-      : modal === "upload" 
-        ? <UploadModal text={alertProps.text} id={alertProps.id} alertType={alertProps.alertType} /> 
         : <AlertModal text={alertProps.text} id={alertProps.id} alertType={alertProps.alertType} /> }
     <button 
       className={`btn rounded btn-wide opacity-80 ${color} ${active}`}
@@ -93,102 +117,6 @@ export const ImportModal = ({ id, text, alertType }: AlertProps) => {
   )
 }
 
-export const UploadModal = ({ id, text, alertType }: AlertProps) => {
-  return (
-    <dialog id={id} className="modal justify-center">
-      <div className="modal-box p-0">
-        <div className={`alert ${alertType} px-12 py-8`}>
-          <span>{UploadDataPanel(id)}</span>
-        </div>
-      </div>
-      <form method="dialog" className="modal-backdrop">
-        <button>close</button>
-      </form>
-    </dialog>
-  )
-}
-
-export const ImportDataPanel = (id: string) => {
-  // @ts-ignore
-  const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
-  // @ts-ignore
-  const [dataContext, dataDispatch] = useContext(DataContext)
-  const [files, setFiles] = useState([]);
-  const [form, setForm] = useState();
-
-  useEffect(function afterUploadSuccessEffect() {
-    appContext.dataStatus === LoadingStatus.SUCCESS && fileValidator(dataContext, dataDispatch);
-    appContext.dataStatus === LoadingStatus.SUCCESS && basicDataAnalysis(dataContext, dataDispatch, 'AGL');
-  }, [appContext.dataStatus])
-
-  useEffect(function fileUploadReader() {
-    const reader = new FileReader();
-    reader.onload = (evt) => fileLoader(evt.target?.result, appContext, appDispatch, dataContext, dataDispatch);
-    files.length ? reader.readAsText(files[0]) : '';
-  }, [files])
-
-  function onFormSubmit(event: any) {
-    event.preventDefault();
-    setForm(event.target);
-    setFiles(event.target.file.files);
-    dataDispatch({ type: 'dataForm', payload: event.target })
-    document.getElementById(id)?.close()
-  }
-
-  return  (
-    <>
-      <DataLayerPicker />
-      <br/>
-      <br/>
-      <form id="uploadForm" 
-      name="sdform" 
-      onSubmit={onFormSubmit}
-      encType="multipart/form-data">
-        <table id="parameterTable" className="formTable">
-          <tbody><tr >
-              <td><label ></label></td>
-              <td>
-              <input 
-                type="file" 
-                id="file" 
-                name="file" 
-                className="file-input file-input-bordered w-full max-w-xs text-deep-sky-200" 
-              /></td>
-            </tr>
-            <tr style={{display: "none"}}>
-              <td><label >Format:</label></td>
-              <td><select  id="f" name="f">
-                  <option value="pjson">JSON</option>
-                </select></td>
-            </tr>
-            <tr>
-        <td colSpan={2} align="left">
-        <br/>
-        <input 
-          type="submit" 
-          value="Import Data" 
-          className="file-input file-input-bordered w-full max-w-xs text-deep-sky-200" 
-          accept='.json,.geojson,.GeoJSON,.GEOJSON'
-        /></td>
-            </tr>
-          </tbody></table>
-      </form>
-    </>
-  )    
-}
-
-// export const UploadDataPanel = (id: string) => {
-//   // may deprecate this
-//   // @ts-ignore
-//   const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
-//   // @ts-ignore
-//   const [dataContext, dataDispatch] = useContext(DataContext)
-//   useEffect(function () {
-//     appContext.currentDataStatus === DataStatus.DATAIMPORTED && fetchGeoprocessData(dataContext, dataDispatch, appContext, appDispatch, dataContext.dataForm);
-//   }, [appContext.currentDataStatus])
-//   return <>HIIIIIIII</>
-// }
-//
 export const DataLayerPicker = () => {
   return (
   <select className="select select-info w-full max-w-xs text-deep-sky-200">

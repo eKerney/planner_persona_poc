@@ -1,4 +1,4 @@
-import { AppImportType, Basemaps, DataStatus, DataType, GeometryType, LoadingStatus } from "./enums";
+import { Basemaps, DataStatus, DataType, GeometryType, LoadingStatus, RequestType } from "./enums";
 
 export type Action = {
     type: string
@@ -32,7 +32,7 @@ export interface AppAction {
 }
 
 export interface AppContextInterface2 {
-  appImportType: AppImportType; 
+  requestType: RequestType;
   dataStatus: LoadingStatus;
   currentDataState: DataStatus;
   basemap: Basemaps;
@@ -40,7 +40,7 @@ export interface AppContextInterface2 {
 }
 
 export interface AppAction2 {
-  APPIMPORTTYPE: string;
+  REQUESTTYPE: string;
   DATASTATUS: string;
   CURRENTDATASTATE: string;
   BASEMAP: string;
@@ -62,9 +62,11 @@ export interface dataAnalysis {
 }
 
 export type GPingestReturn = {
-  Return_Fields: string[];
-  Return_df_Json: object;
+  Return_Fields: string;
+  Return_df_Json: string;
+  Return_Req_Fields: string; 
 }
+
 
 export interface DataContextInterface {
   dataForm: HTMLFormElement;
@@ -153,5 +155,6 @@ export type GeoprocessingParams = {
   Ingest_Trigger: Boolean;
   Preprocess_Trigger: Boolean;
   Upload_Trigger: Boolen;
-  Field_Map: Boolean;
+  Field_Map: Object;
+  df_json: Object;
 }

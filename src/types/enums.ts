@@ -50,7 +50,9 @@ export enum DataStatus {
   DATADENIED = "Data Denied"
 }
 
-export enum AppImportType {
-  ESRI = "ESRI",
-  STANDARD = "STANDARD",
+export enum RequestType {
+  INGEST = "Ingest",
+  PREPROCESS = "Preprocess",
+  UPLOAD = "Upload",
+  FETCH = "Fetch"
 }
