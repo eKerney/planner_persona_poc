@@ -43,9 +43,9 @@ export interface dataAnalysis {
 }
 
 export type GPingestReturn = {
-  Return_Fields: string;
+  Return_Fields: string[];
   Return_df_Json: object;
-  Return_Req_Fields: string; 
+  Return_Req_Fields: string[]; 
 }
 
 export interface DataContextInterface {

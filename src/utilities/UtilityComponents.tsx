@@ -7,6 +7,30 @@ import { AppContext2 } from '../contexts/AppStore2';
 import spinnerGif from '../assets/1496.gif'
 import { ImportDataPanel } from './ImportDataPanel';
 
+export const SelectFields = () => {
+  // @ts-ignore
+  const [dataContext, dataDispatch] = useContext(DataContext) 
+
+  return (
+    <>
+      { dataContext.gpIngestReturn.Return_Req_Fields.length > 0 && dataContext.gpIngestReturn.Return_Req_Fields.map((label:string) => {
+        return (
+        <label key={`${label}-Required`} className="form-control w-full max-w-xs">
+          <div className="label">
+            <span className="label-text">Required Field: {label}</span>
+          </div>
+          <select className="select select-info select-sm">
+            <option disabled selected>Pick one</option>
+            { dataContext.gpIngestReturn.Return_Fields.length > 0 &&
+              dataContext.gpIngestReturn.Return_Fields.map((d:string) => <option key={d}>{d}</option>) }
+          </select>
+        </label>
+        )
+      })}
+    </>
+  )
+}
+
 export const ShowImportSuccessModal = () => {
   // @ts-ignore
   const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)

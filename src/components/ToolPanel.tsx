@@ -1,4 +1,4 @@
-import { Button, PreprocessButton, ShowImportSuccessModal, UploadButton } from "../utilities/UtilityComponents";
+import { Button, PreprocessButton, SelectFields, ShowImportSuccessModal, UploadButton } from "../utilities/UtilityComponents";
 
 export const ToolPanel = () => {
   return (
@@ -36,6 +36,7 @@ export const ToolPanel = () => {
           active="btn-active"
         />
         <br/><br/>
+        <SelectFields />
         <Button 
           text="SUBMIT FIELDS" 
           textColor="text-deep-sky-200"

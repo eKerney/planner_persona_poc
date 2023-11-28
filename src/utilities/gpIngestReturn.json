@@ -1,5 +1,5 @@
 {
-  "Return_Fields": "AGL,WKID,Notes",
+  "Return_Fields": "AGL,WKID,Notes,Latitude,Longitude",
   "Return_df_Json": {
     "AGL": {
       "0": 222,

@@ -63,7 +63,11 @@ export const fetchGeoprocessData = (dataContext: DataContextInterface, dataDispa
   // local testing
   const ETLgeoProcessingIngest = (gpParams: GeoprocessingParams, baseGPurl: string, gpUploadURL: string, gpToolURL: string, formData: HTMLFormElement) => {
     console.log('ETLgeoProcessingIngest');
-    const gpIngestReturn: GPingestReturn = { Return_Fields: ingestData.Return_Fields, Return_df_Json: ingestData.Return_df_Json, Return_Req_Fields: ingestData.Return_Req_Fields}
+    const gpIngestReturn: GPingestReturn = { 
+      Return_Fields: ingestData.Return_Fields.split(","), 
+      Return_df_Json: ingestData.Return_df_Json, 
+      Return_Req_Fields: ingestData.Return_Req_Fields.split(",")
+    }
     dataDispatch({ type: 'gpIngestReturn', payload: gpIngestReturn })
     appDispatch({ type: 'multiple', payload: {dataStatus: LoadingStatus.LOADING, currentDataState: DataStatus.FIELDSRETURNED}})
   }
