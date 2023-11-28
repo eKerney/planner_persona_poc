@@ -11,26 +11,6 @@ export interface CameraPosition {
     tilt?: number;
 }
 
-export interface AppContextInterface {
-  dataStatus: LoadingStatus; 
-  uploadStatus: LoadingStatus;
-  submitStatus: LoadingStatus;
-  approveStatus: LoadingStatus;
-  denyStatus: LoadingStatus;
-  basemap: Basemaps;
-  cameraLocation: CameraPosition;
-}
-
-export interface AppAction {
-  DATASTATUS: string;
-  UPLOADSTATUS: string;
-  SUBMITSTATUS: string;
-  APPROVESTATUS: string;
-  DENYSTATUS: string;
-  BASEMAP: string;
-  CAMERALOCATION: string;
-}
-
 export interface AppContextInterface2 {
   requestType: RequestType;
   dataStatus: LoadingStatus;
@@ -45,6 +25,7 @@ export interface AppAction2 {
   CURRENTDATASTATE: string;
   BASEMAP: string;
   CAMERALOCATION: string;
+  MULTIPLE: string;
 }
 
 export interface fieldInfos {
@@ -63,10 +44,9 @@ export interface dataAnalysis {
 
 export type GPingestReturn = {
   Return_Fields: string;
-  Return_df_Json: string;
+  Return_df_Json: object;
   Return_Req_Fields: string; 
 }
-
 
 export interface DataContextInterface {
   dataForm: HTMLFormElement;
@@ -94,6 +74,7 @@ export interface DataAction {
   CRS: string;
   INFO: string;
   GPINGESTRETURN: string;
+  MULTIPLE: string;
 }
 
 export type GeoJSONprops = {
@@ -156,5 +137,5 @@ export type GeoprocessingParams = {
   Preprocess_Trigger: Boolean;
   Upload_Trigger: Boolen;
   Field_Map: Object;
-  df_json: Object;
+  JSON_data: Object;
 }

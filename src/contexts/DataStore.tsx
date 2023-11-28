@@ -13,7 +13,8 @@ const dataActionType: DataAction = {
   URL: 'url',
   CRS: 'crs',
   INFO: 'info',
-  GPINGESTRETURN: 'gpIngestReturn'
+  GPINGESTRETURN: 'gpIngestReturn',
+  MULTIPLE: 'multiple'
 }
 
 export const initialDataState: DataContextInterface = {
@@ -27,7 +28,7 @@ export const initialDataState: DataContextInterface = {
   url: '',
   crs: '',
   info: {fields: [], analysisField: '', count: 0, avg: 0, min: 0, max: 0},
-  gpIngestReturn: { Return_Fields: '', Return_df_Json: '', Return_Req_Fields: '' }
+  gpIngestReturn: { Return_Fields: '', Return_df_Json: {}, Return_Req_Fields: '' }
 }
 
 
@@ -58,6 +59,8 @@ export const DataStore = ({ children }) => {
         return {...state, info: action.payload}
       case dataActionType.GPINGESTRETURN:
         return {...state, gpIngestReturn: action.payload}
+      case dataActionType.MULTIPLE:
+        return {...state, ...action.payload}
       default:
         return state
     }

@@ -5,12 +5,11 @@ import { DataContext } from '../contexts/DataStore';
 import { basicDataAnalysis } from './DataAnalysis';
 import { AppContext2 } from '../contexts/AppStore2';
 import { LoadingStatus } from '../types/enums';
-import { AppContextInterface2 } from "../types";
 import { DataLayerPicker } from './UtilityComponents';
 
 export const ImportDataPanel = (id: string) => {
   // @ts-ignore
-  const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
+  const [appContext, appDispatch] = useContext(AppContext2)
   // @ts-ignore
   const [dataContext, dataDispatch] = useContext(DataContext)
   const [files, setFiles] = useState([]);

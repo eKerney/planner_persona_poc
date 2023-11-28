@@ -40,8 +40,6 @@ export enum GeometryType {
 
 export enum DataStatus {
   DATAIMPORTED = "Data Imported",
-  GEOMETRVALIDATED = "Geometrty Validated",
-  MAPPREVIEW = "Map Preview",
   DATASUBMITTED = "Data Submitted",
   FIELDSRETURNED = "Fields Returned",
   FIELDSMATCHED = "Fields Matched",

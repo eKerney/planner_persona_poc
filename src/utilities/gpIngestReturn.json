@@ -1,0 +1,25 @@
+{
+  "Return_Fields": "AGL,WKID,Notes",
+  "Return_df_Json": {
+    "AGL": {
+      "0": 222,
+      "1": 189,
+      "2": 172,
+      "3": 151
+    },
+    "WKID": {
+      "0": 4326,
+      "1": 4326,
+      "2": 4326,
+      "3": 4326
+    },
+    "Notes": {
+      "0": "Renaissance Center",
+      "1": "Ally Detroit Center",
+      "2": "Penobscot Building",
+      "3": "Guardian Building"
+    }
+  },
+  
+  "Return_Req_Fields": "Latitude,Longitude,AGL,WKID,Notes"
+}

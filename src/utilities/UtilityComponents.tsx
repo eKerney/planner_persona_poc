@@ -20,16 +20,17 @@ export const UploadButton = ({ text, color, textColor, alertProps, active="btn-a
   const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
   // @ts-ignore
   const [dataContext, dataDispatch] = useContext(DataContext)
-  appDispatch({ type: 'requestType', payload: RequestType.INGEST })
-  console.log('UploadButton', appContext.currentDataState);
+  // appDispatch({ type: 'requestType', payload: RequestType.INGEST })
+  console.log('UploadButton', appContext);
+  console.log('UploadButton', dataContext);
   console.log(active);
   const handleClick = () => fetchGeoprocessData(dataContext, dataDispatch, appContext, appDispatch, dataContext.dataForm);
-  useEffect(() => {
-    active = appContext.currentDataState === DataStatus.DATASUBMITTED 
-               ? 'btn-active'
-               : 'btn-disabled'
-    console.log(active);
-  }, [appContext.currentDataState])
+  // useEffect(() => {
+  //   active = appContext.currentDataState === DataStatus.DATASUBMITTED 
+  //              ? 'btn-active'
+  //              : 'btn-disabled'
+  //   console.log(active);
+  // }, [appContext.currentDataState])
   return (
   <>
     <button 
@@ -43,32 +44,33 @@ export const UploadButton = ({ text, color, textColor, alertProps, active="btn-a
 }
 
 export const PreprocessButton = ({ text, color, textColor, alertProps, active="btn-active", modal="" }) => {
-  // @ts-ignore
-  const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
-  // @ts-ignore
-  const [dataContext, dataDispatch] = useContext(DataContext)
-  appDispatch({ type: 'requestType', payload: RequestType.PREPROCESS })
-  console.log('PreprocessButton', appContext.currentDataState);
-  const handleClick = () => fetchGeoprocessData(dataContext, dataDispatch, appContext, appDispatch, );
-  useEffect(() => {
-    active = appContext.currentDataState === DataStatus.DATASUBMITTED 
-               ? 'btn-active'
-               : 'btn-disabled'
-    console.log(active);
-  }, [appContext.currentDataState])
+  // // @ts-ignore
+  // const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
+  // // @ts-ignore
+  // const [dataContext, dataDispatch] = useContext(DataContext)
+  // // appDispatch({ type: 'requestType', payload: RequestType.PREPROCESS })
+  // console.log('PreprocessButton', appContext.currentDataState);
+  // const handleClick = () => fetchGeoprocessData(dataContext, dataDispatch, appContext, appDispatch, );
+  // useEffect(() => {
+  // active = appContext.currentDataState === DataStatus.DATASUBMITTED 
+  //              ? 'btn-active'
+  //              : 'btn-disabled'
+  //   console.log(active);
+  // }, [appContext.currentDataState])
   return (
   <>
-    <button 
+  {/*   <button 
       className={`btn rounded btn-wide opacity-80 ${color} ${active}`}
       onClick={handleClick}
     >
       <p className={textColor}>{text}</p>
-    </button>
+    </button> */}
   </>
   )
 }
 
 export const Button = ({ text, color, textColor, alertProps, active="btn-active", modal="", handleClick=(()=>alert('butt on'))}: ButtonProps) => {
+  console.log('Button');
   return ( 
   <>
     {modal === "import" 
@@ -138,4 +140,3 @@ export const Spinner = () => {
     </>
   )
 }
-

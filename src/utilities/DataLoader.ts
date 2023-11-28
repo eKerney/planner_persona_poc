@@ -3,19 +3,18 @@ import { DataStatus, DataType, GeometryType, LoadingStatus } from "../types/enum
 
 export const fileLoader = (rawData: any, appContext: AppContextInterface2, appDispatch: any, dataContext: DataContextInterface, dataDispatch: any) => {
   appDispatch({ type: 'dataStatus', payload: LoadingStatus.LOADING });
-  console.log('dataLoader', appContext.currentDataState)
+      console.log('DataLoader');
 
   switch (dataContext.dataType) {
     case DataType.GEOJSON:
       const parsedGeoJSON = JSON.parse(rawData)
-      dataDispatch({ type: 'geoJSONfeatureCollection', payload: parsedGeoJSON })
-
       const blobData = new Blob([JSON.stringify(parsedGeoJSON)], { type: "application/json" });
-      dataDispatch({ type: 'blob', payload: URL.createObjectURL(blobData) })
-      
-      appDispatch({ type: 'dataStatus', payload: LoadingStatus.SUCCESS })
-      appDispatch({ type: 'currentDataState', payload: DataStatus.DATASUBMITTED })
-      // setTimeout(() => appDispatch({ type: 'dataStatus', payload: LoadingStatus.LOADING }), 3000)
+      // dataDispatch({ type: 'geoJSONfeatureCollection', payload: parsedGeoJSON })
+      // dataDispatch({ type: 'blob', payload: URL.createObjectURL(blobData) })
+      dataDispatch({ type: 'multiple', payload: {GeoJSONfeatureCollection: parsedGeoJSON, blob: URL.createObjectURL(blobData)} })
+      // appDispatch({ type: 'dataStatus', payload: LoadingStatus.SUCCESS })
+      // appDispatch({ type: 'currentDataState', payload: DataStatus.DATASUBMITTED })
+      appDispatch({ type: 'multiple', payload: {dataStatus: LoadingStatus.SUCCESS, currentDataState: DataStatus.DATASUBMITTED}})
       break;
     case DataType.KML:
       const parsedKML = JSON.parse(rawData)
@@ -26,7 +25,6 @@ export const fileLoader = (rawData: any, appContext: AppContextInterface2, appDi
     default:
         return LoadingStatus.ERROR 
     }
-    console.log('dataLoader', appContext.currentDataState)
 
     return LoadingStatus.SUCCESS
 }

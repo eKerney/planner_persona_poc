@@ -8,6 +8,7 @@ const appActionType: AppAction2 = {
   CURRENTDATASTATE: 'currentDataStatus',
   BASEMAP: 'basemap',
   CAMERALOCATION: 'cameraLocation',
+  MULTIPLE: 'multiple'
 }
 
 const locations: {[key: string]: CameraPosition} = {
@@ -43,6 +44,8 @@ export const AppStore2 = ({ children }) => {
         return {...state, basemap: action.payload}
       case appActionType.CAMERALOCATION:
         return {...state, cameraLocation: action.payload}
+      case appActionType.MULTIPLE:
+        return {...state, ...action.payload}
       default:
         return state
     }

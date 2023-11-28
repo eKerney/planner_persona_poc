@@ -1,4 +1,5 @@
 import { DataContextInterface, fieldInfos } from "../types";
+import gpIngestReturn from '../utilities/gpIngestReturn.json';
 
 export const basicDataAnalysis = (dataContext: DataContextInterface, dataDispatch: any, analysisField: string) => {
 
@@ -30,3 +31,9 @@ export const basicDataAnalysis = (dataContext: DataContextInterface, dataDispatc
 
 } 
 
+export const ingestDataProcessing = (dataContext: DataContextInterface, dataDispatch: any) => {
+  const retFields = (gpIngestReturn);
+  // console.log(retFields);
+  // console.log(gpIngestReturn);
+
+}
