@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { AlertProps, AppContextInterface2, ButtonProps } from "../types";
 import { DataContext } from '../contexts/DataStore';
 import { DataStatus, LoadingStatus, RequestType } from '../types/enums';
@@ -10,6 +10,14 @@ import { ImportDataPanel } from './ImportDataPanel';
 export const SelectFields = () => {
   // @ts-ignore
   const [dataContext, dataDispatch] = useContext(DataContext) 
+  const [fieldMap, setFieldMap] = useState({Latitude:'', Longitude:'', AGL:'', WKID:'', Notes:''});
+  const onClick = ( { target: { value, parentNode: { name } } }: {target: any}) => {
+    console.log(name, value) 
+    name 
+      ? setFieldMap({...fieldMap, [name]: value}) 
+      : ''
+    console.log(fieldMap) 
+  }
 
   return (
     <>
@@ -19,7 +27,7 @@ export const SelectFields = () => {
           <div className="label">
             <span className="label-text">Required Field: {label}</span>
           </div>
-          <select className="select select-info select-sm">
+          <select name={label} className="select select-info select-sm" onClick={onClick}>
             <option disabled selected>Pick one</option>
             { dataContext.gpIngestReturn.Return_Fields.length > 0 &&
               dataContext.gpIngestReturn.Return_Fields.map((d:string) => <option key={d}>{d}</option>) }
