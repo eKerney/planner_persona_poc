@@ -1,5 +1,11 @@
 {
-  "Return_Fields": "AGL,WKID,Notes,Latitude,Longitude",
+  "Return_Fields": [
+    "AGL",
+    "WKID",
+    "Notes",
+    "Longitude",
+    "Latitude"
+  ],
   "Return_df_Json": {
     "AGL": {
       "0": 222,
@@ -18,8 +24,25 @@
       "1": "Ally Detroit Center",
       "2": "Penobscot Building",
       "3": "Guardian Building"
+    },
+    "Longitude": {
+      "0": -83.0397422587,
+      "1": -83.0449315211,
+      "2": -83.0475250285,
+      "3": -83.046172202
+    },
+    "Latitude": {
+      "0": 42.3290091624,
+      "1": 42.3300600783,
+      "2": 42.3305252523,
+      "3": 42.3299582968
     }
   },
-  
-  "Return_Req_Fields": "Latitude,Longitude,AGL,WKID,Notes"
+  "Return_Req_Fields": [
+    "Latitude",
+    "Longitude",
+    "AGL",
+    "WKID",
+    "Notes"
+  ]
 }

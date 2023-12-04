@@ -1,0 +1,73 @@
+{
+  "Data": {"itemID": "if72a37c6-65dd-4612-b512-678f20c4d7fc"},
+  "Return_df_Json": {
+    "AGL": {
+      "0": 222,
+      "1": 189,
+      "2": 172,
+      "3": 151
+    },
+    "WKID": {
+      "0": 4326,
+      "1": 4326,
+      "2": 4326,
+      "3": 4326
+    },
+    "Notes": {
+      "0": "Renaissance Center",
+      "1": "Ally Detroit Center",
+      "2": "Penobscot Building",
+      "3": "Guardian Building"
+    },
+    "Longitude": {
+      "0": -83.0397422587,
+      "1": -83.0449315211,
+      "2": -83.0475250285,
+      "3": -83.046172202
+    },
+    "Latitude": {
+      "0": 42.3290091624,
+      "1": 42.3300600783,
+      "2": 42.3305252523,
+      "3": 42.3299582968
+    }
+  },
+  "Field_Map": {
+    "Latitude": "Latitude",
+    "Longitude": "Longitude",
+    "AGL": "AGL",
+    "WKID": "WKID",
+    "Notes": "Notes"
+  }
+}
+
+{
+  "FIle": {
+    "itemID": ""
+  },
+  "Data_Type": "obstacles",
+  "Ingest_Trigger": false,
+  "Preprocess_Trigger": true,
+  "Upload_Trigger": false,
+  "Field_Map": "{\"Latitude\":\"Latitude\",\"Longitude\":\"Longitude\",\"AGL\":\"AGL\",\"WKID\":\"WKID\",\"Notes\":\"\"}",
+  "JSON_data": "{\"AGL\":{\"0\":222,\"1\":189,\"2\":172,\"3\":151},\"WKID\":{\"0\":4326,\"1\":4326,\"2\":4326,\"3\":4326},\"Notes\":{\"0\":\"Renaissance Center\",\"1\":\"Ally Detroit Center\",\"2\":\"Penobscot Building\",\"3\":\"Guardian Building\"}}",
+  "Data": {"itemID": "i0e72476c-2e4c-4a82-9817-4966e9027849"},
+},
+{
+  "FIle": {
+    "itemID": ""
+  },
+  "Data_Type": "obstacles",
+  "Ingest_Trigger": false,
+  "Preprocess_Trigger": true,
+  "Upload_Trigger": false,
+  "Field_Map": {
+    "Latitude": "Latitude",
+    "Longitude": "Longitude",
+    "AGL": "AGL",
+    "WKID": "WKID",
+    "Notes": "Notes"
+  },
+},
+
+

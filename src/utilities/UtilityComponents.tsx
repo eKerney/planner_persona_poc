@@ -1,7 +1,7 @@
 import { useEffect, useContext, useState } from 'react';
 import { AlertProps, AppContextInterface2, ButtonProps } from "../types";
 import { DataContext } from '../contexts/DataStore';
-import { DataStatus, LoadingStatus, RequestType } from '../types/enums';
+import { DataStatus, LoadingStatus } from '../types/enums';
 import { fetchGeoprocessData } from './DataFetcher';
 import { AppContext2 } from '../contexts/AppStore2';
 import spinnerGif from '../assets/1496.gif'
@@ -10,13 +10,15 @@ import { ImportDataPanel } from './ImportDataPanel';
 export const SelectFields = () => {
   // @ts-ignore
   const [dataContext, dataDispatch] = useContext(DataContext) 
+
+
   const [fieldMap, setFieldMap] = useState({Latitude:'', Longitude:'', AGL:'', WKID:'', Notes:''});
   const onClick = ( { target: { value, parentNode: { name } } }: {target: any}) => {
-    console.log(name, value) 
     name 
       ? setFieldMap({...fieldMap, [name]: value}) 
       : ''
-    console.log(fieldMap) 
+    dataDispatch({ type: 'fieldMap', payload: fieldMap })
+    console.log('fieldMap', fieldMap) 
   }
 
   return (
@@ -42,6 +44,7 @@ export const SelectFields = () => {
 export const ShowImportSuccessModal = () => {
   // @ts-ignore
   const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
+  useEffect(() => console.log(appContext.requestType),[appContext.requestType]);
   appContext.dataStatus === LoadingStatus.SUCCESS && document.getElementById('importSuccess')?.showModal()
   appContext.dataStatus === LoadingStatus.SUCCESS && setTimeout(() => document.getElementById('importSuccess')?.close(), 1000)
   return <AlertModal text="DATA IMPORTED SUCCESSFULLY" id="importSuccess" alertType="alert-info" /> 
@@ -52,10 +55,6 @@ export const UploadButton = ({ text, color, textColor, alertProps, active="btn-a
   const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
   // @ts-ignore
   const [dataContext, dataDispatch] = useContext(DataContext)
-  // appDispatch({ type: 'requestType', payload: RequestType.INGEST })
-  console.log('UploadButton', appContext);
-  console.log('UploadButton', dataContext);
-  console.log(active);
   const handleClick = () => fetchGeoprocessData(dataContext, dataDispatch, appContext, appDispatch, dataContext.dataForm);
   // useEffect(() => {
   //   active = appContext.currentDataState === DataStatus.DATASUBMITTED 
@@ -76,13 +75,14 @@ export const UploadButton = ({ text, color, textColor, alertProps, active="btn-a
 }
 
 export const PreprocessButton = ({ text, color, textColor, alertProps, active="btn-active", modal="" }) => {
-  // // @ts-ignore
-  // const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
-  // // @ts-ignore
-  // const [dataContext, dataDispatch] = useContext(DataContext)
-  // // appDispatch({ type: 'requestType', payload: RequestType.PREPROCESS })
-  // console.log('PreprocessButton', appContext.currentDataState);
-  // const handleClick = () => fetchGeoprocessData(dataContext, dataDispatch, appContext, appDispatch, );
+  // @ts-ignore
+  const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
+  // @ts-ignore
+  const [dataContext, dataDispatch] = useContext(DataContext)
+  // appDispatch({ type: 'requestType', payload: RequestType.PREPROCESS })
+  const handleClick = () => {
+    fetchGeoprocessData(dataContext, dataDispatch, appContext, appDispatch, );
+  }
   // useEffect(() => {
   // active = appContext.currentDataState === DataStatus.DATASUBMITTED 
   //              ? 'btn-active'
@@ -91,18 +91,17 @@ export const PreprocessButton = ({ text, color, textColor, alertProps, active="b
   // }, [appContext.currentDataState])
   return (
   <>
-  {/*   <button 
+  {  <button 
       className={`btn rounded btn-wide opacity-80 ${color} ${active}`}
       onClick={handleClick}
     >
       <p className={textColor}>{text}</p>
-    </button> */}
+    </button>}
   </>
   )
 }
 
 export const Button = ({ text, color, textColor, alertProps, active="btn-active", modal="", handleClick=(()=>alert('butt on'))}: ButtonProps) => {
-  console.log('Button');
   return ( 
   <>
     {modal === "import" 

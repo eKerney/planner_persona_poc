@@ -60,6 +60,7 @@ export interface DataContextInterface {
   crs: string;
   info: dataAnalysis;
   gpIngestReturn: GPingestReturn;
+  fieldMap: object;
 }
 
 export interface DataAction {
@@ -75,6 +76,7 @@ export interface DataAction {
   INFO: string;
   GPINGESTRETURN: string;
   MULTIPLE: string;
+  FIELDMAP: string;
 }
 
 export type GeoJSONprops = {

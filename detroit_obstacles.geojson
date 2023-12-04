@@ -1,0 +1,65 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "AGL": 222,
+                "WKID": 4326,
+                "Notes": "Renaissance Center"
+            },
+            "geometry": {
+                "coordinates": [
+                    -83.03974225868565,
+                    42.329009162397824
+                ],
+                "type": "Point"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "AGL": 189,
+                "WKID": 4326,
+                "Notes": "Ally Detroit Center"
+            },
+            "geometry": {
+                "coordinates": [
+                    -83.0449315210592,
+                    42.33006007831895
+                ],
+                "type": "Point"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "AGL": 172,
+                "WKID": 4326,
+                "Notes": "Penobscot Building"
+            },
+            "geometry": {
+                "coordinates": [
+                    -83.0475250285068,
+                    42.330525252255256
+                ],
+                "type": "Point"
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "AGL": 151,
+                "WKID": 4326,
+                "Notes": "Guardian Building"
+            },
+            "geometry": {
+                "coordinates": [
+                    -83.04617220197228,
+                    42.32995829676747
+                ],
+                "type": "Point"
+            }
+        }
+    ]
+}

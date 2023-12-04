@@ -28,13 +28,13 @@ export const ToolPanel = () => {
           active="btn-active"
         />
         <br/><br/>
-        <PreprocessButton
+         { <PreprocessButton
           text="RETURN FIELDS" 
           textColor="text-deep-sky-200"
           color="bg-deep-sky-500"
           alertProps={{text: "SUCCESSFULLY SUBMITTED FIELDS", id:"submitSuccess", alertType: "alert-info"}}
           active="btn-active"
-        />
+        /> }
         <br/><br/>
         <SelectFields />
         <Button 
