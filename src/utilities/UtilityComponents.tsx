@@ -10,15 +10,13 @@ import { ImportDataPanel } from './ImportDataPanel';
 export const SelectFields = () => {
   // @ts-ignore
   const [dataContext, dataDispatch] = useContext(DataContext) 
-
-
   const [fieldMap, setFieldMap] = useState({Latitude:'', Longitude:'', AGL:'', WKID:'', Notes:''});
+  useEffect(() => console.log('dataContext.gpIngestReturn', dataContext.gpIngestReturn), [dataContext])
   const onClick = ( { target: { value, parentNode: { name } } }: {target: any}) => {
     name 
       ? setFieldMap({...fieldMap, [name]: value}) 
       : ''
     dataDispatch({ type: 'fieldMap', payload: fieldMap })
-    console.log('fieldMap', fieldMap) 
   }
 
   return (
@@ -56,12 +54,6 @@ export const UploadButton = ({ text, color, textColor, alertProps, active="btn-a
   // @ts-ignore
   const [dataContext, dataDispatch] = useContext(DataContext)
   const handleClick = () => fetchGeoprocessData(dataContext, dataDispatch, appContext, appDispatch, dataContext.dataForm);
-  // useEffect(() => {
-  //   active = appContext.currentDataState === DataStatus.DATASUBMITTED 
-  //              ? 'btn-active'
-  //              : 'btn-disabled'
-  //   console.log(active);
-  // }, [appContext.currentDataState])
   return (
   <>
     <button 
@@ -83,12 +75,6 @@ export const PreprocessButton = ({ text, color, textColor, alertProps, active="b
   const handleClick = () => {
     fetchGeoprocessData(dataContext, dataDispatch, appContext, appDispatch, );
   }
-  // useEffect(() => {
-  // active = appContext.currentDataState === DataStatus.DATASUBMITTED 
-  //              ? 'btn-active'
-  //              : 'btn-disabled'
-  //   console.log(active);
-  // }, [appContext.currentDataState])
   return (
   <>
   {  <button 
@@ -101,14 +87,19 @@ export const PreprocessButton = ({ text, color, textColor, alertProps, active="b
   )
 }
 
-export const Button = ({ text, color, textColor, alertProps, active="btn-active", modal="", handleClick=(()=>alert('butt on'))}: ButtonProps) => {
+export const Button = ({ text, color, textColor, alertProps, dataStatus, modal="", handleClick=(()=>alert('butt on'))}: ButtonProps) => {
+  // @ts-ignore
+  const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
+  console.log('dataStatus', dataStatus);
   return ( 
   <>
     {modal === "import" 
       ? <ImportModal text={alertProps.text} id={alertProps.id} alertType={alertProps.alertType} /> 
         : <AlertModal text={alertProps.text} id={alertProps.id} alertType={alertProps.alertType} /> }
     <button 
-      className={`btn rounded btn-wide opacity-80 ${color} ${active}`}
+      className={`btn rounded btn-wide opacity-80 ${color} 
+        ${appContext.currentDataState === dataStatus ? 'btn-active' : 'btn-disabled'}
+      `}
       onClick={handleClick}
     >
       <p className={textColor}>{text}</p>

@@ -1,3 +1,4 @@
+import { DataStatus } from "../types/enums";
 import { Button, PreprocessButton, SelectFields, ShowImportSuccessModal, UploadButton } from "../utilities/UtilityComponents";
 
 export const ToolPanel = () => {
@@ -15,7 +16,7 @@ export const ToolPanel = () => {
           textColor="text-deep-sky-200"
           color="bg-deep-sky-500"
           modal="import"
-          active="btn-active"
+          dataStatus={DataStatus.DATAIMPORTED}
           alertProps={{text: "IMPORT SUCCESS", id:"importDialog", alertType: "alert"}}
           handleClick={()=>document.getElementById('importDialog').showModal()} 
         />
@@ -41,7 +42,6 @@ export const ToolPanel = () => {
           text="SUBMIT FIELDS" 
           textColor="text-deep-sky-200"
           color="bg-deep-sky-500"
-          active="btn-disabled"
           alertProps={{text: "SUCCESSFULLY SUBMITTED FIELDS", id:"submitSuccess", alertType: "alert-info"}}
           handleClick={()=>document.getElementById('submitSuccess').showModal()} 
         />
@@ -50,7 +50,6 @@ export const ToolPanel = () => {
           text="APPROVE DATA" 
           textColor="text-deep-sky-200"
           color="bg-galactic-500"
-          active="btn-disabled"
           alertProps={{text: "SUCCESSFULLY APPROVED DATA", id:"approveSuccess", alertType: "alert-success"}}
           handleClick={()=>document.getElementById('approveSuccess').showModal()} 
         />

@@ -1,10 +1,19 @@
 {
-  "Return_Fields": [
+  "Return_Fields_list": [
     "AGL",
     "WKID",
     "Notes",
     "Longitude",
     "Latitude"
+  ],
+  "Return_Fields": "AGL,WKID,Notes,Longitude,Latitude",
+  "Return_Req_Fields": "Latitude,Longitude,AGL,WKID,Notes",
+  "Return_Req_Fields_list": [
+    "Latitude",
+    "Longitude",
+    "AGL",
+    "WKID",
+    "Notes"
   ],
   "Return_df_Json": {
     "AGL": {
@@ -37,12 +46,5 @@
       "2": 42.3305252523,
       "3": 42.3299582968
     }
-  },
-  "Return_Req_Fields": [
-    "Latitude",
-    "Longitude",
-    "AGL",
-    "WKID",
-    "Notes"
-  ]
+  }
 }

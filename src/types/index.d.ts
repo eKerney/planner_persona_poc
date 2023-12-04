@@ -108,7 +108,7 @@ export interface ButtonProps {
   alertProps: AlertProps;
   handleClick?: MouseEventHandler;
   modal?: string;
-  active?: string;
+  dataStatus?: DataStatus;
 }
 
 export interface AlertProps {
