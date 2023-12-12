@@ -11,7 +11,7 @@ export const SelectFields = () => {
   // @ts-ignore
   const [dataContext, dataDispatch] = useContext(DataContext) 
   const [fieldMap, setFieldMap] = useState({Latitude:'', Longitude:'', AGL:'', WKID:'', Notes:''});
-  useEffect(() => console.log('dataContext.gpIngestReturn', dataContext.gpIngestReturn), [dataContext])
+  // useEffect(() => console.log('dataContext.gpIngestReturn', dataContext.gpIngestReturn), [dataContext])
   const onClick = ( { target: { value, parentNode: { name } } }: {target: any}) => {
     name 
       ? setFieldMap({...fieldMap, [name]: value}) 
@@ -90,7 +90,7 @@ export const PreprocessButton = ({ text, color, textColor, alertProps, active="b
 export const Button = ({ text, color, textColor, alertProps, dataStatus, modal="", handleClick=(()=>alert('butt on'))}: ButtonProps) => {
   // @ts-ignore
   const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
-  console.log('dataStatus', dataStatus);
+  // console.log('dataStatus', dataStatus);
   return ( 
   <>
     {modal === "import" 

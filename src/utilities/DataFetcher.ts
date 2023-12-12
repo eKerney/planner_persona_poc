@@ -41,75 +41,67 @@ export const fetchGeoprocessData = (dataContext: DataContextInterface, dataDispa
             requestType: RequestType.PREPROCESS
           }})
         })
-        // console.log('gpIngestReturn', gpIngestReturn)
-        // console.log('I MADE IT HERE!!!!')
-        // dataDispatch({ type: 'gpIngestReturn', payload: gpIngestReturn })
-        // // appDispatch({ type: 'dataStatus', payload: LoadingStatus.SUCCESS })
-        // appDispatch({ type: 'multiple', payload: {
-        //   dataStatus: LoadingStatus.LOADING, 
-        //   currentDataState: DataStatus.FIELDSRETURNED,
-        //   requestType: RequestType.PREPROCESS
-        // }})
       });
     });
   }
 
-  // const ETLgeoProcessingIngest = (gpParams: GeoprocessingParams, baseGPurl: string, gpUploadURL: string, gpToolURL: string, formData: HTMLFormElement) => {
-  //   console.log('ETLgeoProcessingIngest');
-  //   appDispatch({ type: 'multiple', payload: {dataStatus: LoadingStatus.LOADING, currentDataState: DataStatus.DATASUBMITTED}})
-  //   const uploadSucceeded = (response: any) => {
-  //     const itemID = response["data"]["item"].itemID;
-  //     console.log("File upload successful, item ID: ", itemID);
-  //     GeoprocessorSubmitJob(baseGPurl, gpToolURL, gpParams, itemID);
-  //     return itemID;
-  //   }
-  //   const uploadFailed = (response: any) => console.log("Failed: ", response);
-  //   esriRequest((`${baseGPurl}${gpUploadURL}`), {
-  //     method: "post", 
-  //     body: formData,
-  //     authMode: "immediate",
-  //   }).then(uploadSucceeded, uploadFailed)
-  //     .catch((error) => {
-  //       console.error('An error occured uploading the file: ' + error);
-  //       return null;
-  //     });
-  // }
-
-  // local testing
   const ETLgeoProcessingIngest = (gpParams: GeoprocessingParams, baseGPurl: string, gpUploadURL: string, gpToolURL: string, formData: HTMLFormElement) => {
     console.log('ETLgeoProcessingIngest');
-    const gpIngestReturn: GPingestReturn = { 
-      Return_Fields: ingestData.Return_Fields.split(","), 
-      Return_df_Json: ingestData.Return_df_Json, 
-      Return_Req_Fields: ingestData.Return_Req_Fields.split(",")
+    appDispatch({ type: 'multiple', payload: {dataStatus: LoadingStatus.LOADING, currentDataState: DataStatus.DATASUBMITTED}})
+    const uploadSucceeded = (response: any) => {
+      const itemID = response["data"]["item"].itemID;
+      console.log("File upload successful, item ID: ", itemID);
+      GeoprocessorSubmitJob(baseGPurl, gpToolURL, gpParams, itemID);
+      return itemID;
     }
-    //
-    dataDispatch({ type: 'gpIngestReturn', payload: gpIngestReturn })
-    appDispatch({ type: 'multiple', payload: {
-      dataStatus: LoadingStatus.LOADING, 
-      currentDataState: DataStatus.FIELDSRETURNED,
-      requestType: RequestType.PREPROCESS
-    }})
-
+    const uploadFailed = (response: any) => console.log("Failed: ", response);
+    esriRequest((`${baseGPurl}${gpUploadURL}`), {
+      method: "post", 
+      body: formData,
+      authMode: "immediate",
+    }).then(uploadSucceeded, uploadFailed)
+    .catch((error) => {
+      console.error('An error occured uploading the file: ' + error);
+      return null;
+    });
   }
+
+
+  // local testing
+  // const ETLgeoProcessingIngest = (gpParams: GeoprocessingParams, baseGPurl: string, gpUploadURL: string, gpToolURL: string, formData: HTMLFormElement) => {
+  //   console.log('ETLgeoProcessingIngest');
+  //   const gpIngestReturn: GPingestReturn = { 
+  //     Return_Fields: ingestData.Return_Fields.split(","), 
+  //     Return_df_Json: ingestData.Return_df_Json, 
+  //     Return_Req_Fields: ingestData.Return_Req_Fields.split(",")
+  //   }
+  //   //
+  //   dataDispatch({ type: 'gpIngestReturn', payload: gpIngestReturn })
+  //   appDispatch({ type: 'multiple', payload: {
+  //     dataStatus: LoadingStatus.LOADING, 
+  //     currentDataState: DataStatus.FIELDSRETURNED,
+  //     requestType: RequestType.PREPROCESS
+  //   }})
+  //
+  // }
 
   const ETLgeoProcessingPreprocess = (gpParams: GeoprocessingParams, baseGPurl: string, gpToolURL: string, fieldMap: object) => {
     console.log('ETLgeoProcessingPreprocess');
     gpParams = {
       ...gpParams, 
-      JSON_data: dataContext.gpIngestReturn.Return_df_Json, 
+      FIle : {"itemID": "i90847f0a-e77f-435e-82bc-5ea0b0c0b790"},
+      JSON_data: dataContext.gpIngestReturn.Return_df_Json,
       Field_Map: dataContext.fieldMap
-      // JSON_data: JSON.stringify(dataContext.gpIngestReturn.Return_df_Json), 
-      // Field_Map: JSON.stringify(dataContext.fieldMap)
     };
     console.log(gpParams);
-    // console.log(dataContext.gpIngestReturn);
     geoprocessor.submitJob((`${baseGPurl}${gpToolURL}`), gpParams).then((jobInfo) => {
-     console.log("ArcGIS Server job ID: ", jobInfo.jobId);
-      const options = { interval: 1500, statusCallback: (j: any) => console.log("Job Status: ", j.jobStatus, j.messages)};
+      console.log(`${baseGPurl}${gpToolURL}`)
+      console.log("ArcGIS Server job ID: ", jobInfo.jobId);
+      const options = { interval: 500, statusCallback: (j: any) => console.log("Job Status: ", j.jobStatus, j)};
       jobInfo.waitForJobCompletion(options).then(() => {
         jobInfo.fetchResultData("Return_df_Json").then((data) => console.log(data.value))
         // dataDispatch({ type: 'gpIngestReturn', payload: gpIngestReturn })
+        console.log('completion')
         appDispatch({ type: 'dataStatus', payload: LoadingStatus.SUCCESS })
       });
     });

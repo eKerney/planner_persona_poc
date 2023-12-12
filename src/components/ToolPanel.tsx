@@ -1,7 +1,16 @@
+import { useContext } from "react";
+import { AppContext2 } from "../contexts/AppStore2";
+import { DataContext } from "../contexts/DataStore";
 import { DataStatus } from "../types/enums";
 import { Button, PreprocessButton, SelectFields, ShowImportSuccessModal, UploadButton } from "../utilities/UtilityComponents";
 
+
 export const ToolPanel = () => {
+  // @ts-ignore
+  const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
+  // @ts-ignore
+  const [dataContext, dataDispatch] = useContext(DataContext)
+
   return (
     <div className="drawer lg:drawer-open flex justify-center pt-5">
     <ShowImportSuccessModal />
