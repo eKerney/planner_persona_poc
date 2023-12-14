@@ -9,11 +9,7 @@ export const fileLoader = (rawData: any, appContext: AppContextInterface2, appDi
     case DataType.GEOJSON:
       const parsedGeoJSON = JSON.parse(rawData)
       const blobData = new Blob([JSON.stringify(parsedGeoJSON)], { type: "application/json" });
-      // dataDispatch({ type: 'geoJSONfeatureCollection', payload: parsedGeoJSON })
-      // dataDispatch({ type: 'blob', payload: URL.createObjectURL(blobData) })
       dataDispatch({ type: 'multiple', payload: {GeoJSONfeatureCollection: parsedGeoJSON, blob: URL.createObjectURL(blobData)} })
-      // appDispatch({ type: 'dataStatus', payload: LoadingStatus.SUCCESS })
-      // appDispatch({ type: 'currentDataState', payload: DataStatus.DATASUBMITTED })
       appDispatch({ type: 'multiple', payload: {dataStatus: LoadingStatus.SUCCESS, currentDataState: DataStatus.DATASUBMITTED}})
       break;
     case DataType.KML:

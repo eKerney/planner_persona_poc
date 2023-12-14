@@ -17,6 +17,7 @@ export interface AppContextInterface2 {
   currentDataState: DataStatus;
   basemap: Basemaps;
   cameraLocation: CameraPosition;
+  geoprocessingParams: GeoprocessingParams;
 }
 
 export interface AppAction2 {
@@ -25,6 +26,7 @@ export interface AppAction2 {
   CURRENTDATASTATE: string;
   BASEMAP: string;
   CAMERALOCATION: string;
+  GEOPROCESSINGPARAMS: string;
   MULTIPLE: string;
 }
 
@@ -42,7 +44,7 @@ export interface dataAnalysis {
   max: number;
 }
 
-export type GPingestReturn = {
+export type GPreturnData = {
   Return_Fields: string[];
   Return_df_Json: object;
   Return_Req_Fields: string[]; 
@@ -59,7 +61,9 @@ export interface DataContextInterface {
   url: string;
   crs: string;
   info: dataAnalysis;
-  gpIngestReturn: GPingestReturn;
+  gpIngestReturn: GPreturnData;
+  gpPreprocessReturn: GPreturnData;
+  gpUploadReturn: GPreturnData;
   fieldMap: object;
 }
 
@@ -75,6 +79,8 @@ export interface DataAction {
   CRS: string;
   INFO: string;
   GPINGESTRETURN: string;
+  GPPREPROCESSRETURN: string;
+  GPUPLOADRETURN: string;
   MULTIPLE: string;
   FIELDMAP: string;
 }

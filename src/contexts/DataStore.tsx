@@ -14,6 +14,8 @@ const dataActionType: DataAction = {
   CRS: 'crs',
   INFO: 'info',
   GPINGESTRETURN: 'gpIngestReturn',
+  GPPREPROCESSRETURN: 'gpPreprocessReturn', 
+  GPUPLOADRETURN: 'GPuploadReturn',
   MULTIPLE: 'multiple',
   FIELDMAP: 'fieldMap'
 }
@@ -30,6 +32,8 @@ export const initialDataState: DataContextInterface = {
   crs: '',
   info: {fields: [], analysisField: '', count: 0, avg: 0, min: 0, max: 0},
   gpIngestReturn: { Return_Fields: [], Return_df_Json: {}, Return_Req_Fields: [] },
+  gpPreprocessReturn: { Return_Fields: [], Return_df_Json: {}, Return_Req_Fields: [] },
+  gpUploadReturn: { Return_Fields: [], Return_df_Json: {}, Return_Req_Fields: [] },
   fieldMap: {}
 }
 
@@ -61,6 +65,10 @@ export const DataStore = ({ children }: { children: any }) => {
         return {...state, info: action.payload}
       case dataActionType.GPINGESTRETURN:
         return {...state, gpIngestReturn: action.payload}
+      case dataActionType.GPPREPROCESSRETURN:
+        return {...state, gpPreprocessReturn: action.payload}
+      case dataActionType.GPUPLOADRETURN:
+        return {...state, gpUploadReturn: action.payload}
       case dataActionType.FIELDMAP:
         return {...state, fieldMap: action.payload}
       case dataActionType.MULTIPLE:

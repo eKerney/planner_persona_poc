@@ -1,0 +1,207 @@
+{
+  "FIle": {
+    "itemID": ""
+  },
+  "Data_Type": "obstacles",
+  "Ingest_Trigger": false,
+  "Preprocess_Trigger": true,
+  "Upload_Trigger": false,
+  "Field_Map": "{\"Latitude\":\"Latitude\",\"Longitude\":\"Longitude\",\"AGL\":\"AGL\",\"WKID\":\"WKID\",\"Notes\":\"\"}",
+  "JSON_data": "{\"AGL\":{\"0\":222,\"1\":189,\"2\":172,\"3\":151},\"WKID\":{\"0\":4326,\"1\":4326,\"2\":4326,\"3\":4326},\"Notes\":{\"0\":\"Renaissance Center\",\"1\":\"Ally Detroit Center\",\"2\":\"Penobscot Building\",\"3\":\"Guardian Building\"},\"Longitude\":{\"0\":-83.0397422587,\"1\":-83.0449315211,\"2\":-83.0475250285,\"3\":-83.046172202},\"Latitude\":{\"0\":42.3290091624,\"1\":42.3300600783,\"2\":42.3305252523,\"3\":42.3299582968}}"
+}
+
+{
+  "FIle": {
+    "itemID": ""
+  },
+  "Data_Type": "obstacles",
+  "Ingest_Trigger": false,
+  "Preprocess_Trigger": true,
+  "Upload_Trigger": false,
+  "Field_Map": {
+    "Latitude": "Latitude",
+    "Longitude": "Longitude",
+    "AGL": "AGL",
+    "WKID": "WKID",
+    "Notes": ""
+  },
+  "JSON_data": {
+    "AGL": {
+      "0": 222,
+      "1": 189,
+      "2": 172,
+      "3": 151
+    },
+    "WKID": {
+      "0": 4326,
+      "1": 4326,
+      "2": 4326,
+      "3": 4326
+    },
+    "Notes": {
+      "0": "Renaissance Center",
+      "1": "Ally Detroit Center",
+      "2": "Penobscot Building",
+      "3": "Guardian Building"
+    },
+    "Longitude": {
+      "0": -83.0397422587,
+      "1": -83.0449315211,
+      "2": -83.0475250285,
+      "3": -83.046172202
+    },
+    "Latitude": {
+      "0": 42.3290091624,
+      "1": 42.3300600783,
+      "2": 42.3305252523,
+      "3": 42.3299582968
+    }
+  }
+}
+
+{
+  "FIle": {
+    "itemID": ""
+  },
+  "Data_Type": "obstacles",
+  "Ingest_Trigger": false,
+  "Preprocess_Trigger": true,
+  "Upload_Trigger": false,
+  "Field_Map": "{ \"Latitude\": \"Latitude\" \"Longitude\": \"Longitude\" \"AGL\": \"AGL\" \"WKID\": \"WKID\" \"Notes\": \"Notes\"}",
+  "JSON_data": "{ \"AGL\": \"[object Object]\" \"WKID\": \"[object Object]\" \"Notes\": \"[object Object]\" \"Longitude\": \"[object Object]\" \"Latitude\": \"[object Object]\"}"
+}
+{
+Data_Type: "obstacles"
+FIle: Object { itemID: "" }
+Field_Map: '{ "Latitude": "Latitude" "Longitude": "Longitude" "AGL": "AGL" "WKID": "WKID" "Notes": "Notes"}'
+Ingest_Trigger: false
+JSON_data: '{ "AGL": "[object Object]" "WKID": "[object Object]" "Notes": "[object Object]" "Longitude": "[object Object]" "Latitude": "[object Object]"}'
+Preprocess_Trigger: true
+Upload_Trigger: false
+DataFetcher.ts:112:12
+}
+
+{
+  "value": [
+    {},
+    {},
+    {},
+    {}
+  ],
+  "origin": 7
+}
+Job Status:  job-submitted 
+Object { _timer: 437, Symbol("Accessor-Handles"): null, Symbol("Accessor-Initialized"): true, … }
+DataFetcher.ts:119:75
+job-submitted
+
+{}
+Job Status:  job-submitted 
+Object { _timer: 437, Symbol("Accessor-Handles"): null, Symbol("Accessor-Initialized"): true, … }
+​
+__accessor__: Object { destroyed: false, lifecycle: 2, _origin: 7, … }
+​
+_timer: undefined
+​
+destroy: function value()
+​
+initialize: function value()
+​
+Symbol(Accessor-Handles): null
+​
+Symbol(Accessor-Initialized): true
+​
+<prototype>: Object { declaredClass: "esri.rest.support.JobInfo", … }
+DataFetcher.ts:119:75
+
+ETLgeoProcessingPreprocess DataFetcher.ts:88:12
+{ "Latitude": "Latitude" "Longitude": "Longitude" "AGL": "AGL" "WKID": "WKID" "Notes": "Notes"} DataFetcher.ts:95:14
+{ "AGL": "[object Object]" DataFetcher.ts:99:16
+{ "AGL": "[object Object]" "WKID": "[object Object]" DataFetcher.ts:99:16
+{ "AGL": "[object Object]" "WKID": "[object Object]" "Notes": "[object Object]" DataFetcher.ts:99:16
+{ "AGL": "[object Object]" "WKID": "[object Object]" "Notes": "[object Object]" "Longitude": "[object Object]" DataFetcher.ts:99:16
+{ "AGL": "[object Object]" "WKID": "[object Object]" "Notes": "[object Object]" "Longitude": "[object Object]" "Latitude": "[object Object]" DataFetcher.ts:99:16
+{ "AGL": "[object Object]" "WKID": "[object Object]" "Notes": "[object Object]" "Longitude": "[object Object]" "Latitude": "[object Object]"} DataFetcher.ts:102:14
+Object { FIle: {…}, Data_Type: "obstacles", Ingest_Trigger: false, Preprocess_Trigger: true, Upload_Trigger: false, Field_Map: '{ "Latitude": "Latitude" "Longitude": "Longitude" "AGL": "AGL" "WKID": "WKID" "Notes": "Notes"}', JSON_data: '{ "AGL": "[object Object]" "WKID": "[object Object]" "Notes": "[object Object]" "Longitude": "[object Object]" "Latitude": "[object Object]"}' }
+DataFetcher.ts:112:12
+https://gis-dev.airspacelink.com/server/rest/services/ETLUpload/GPServer/etl_upload DataFetcher.ts:116:14
+ArcGIS Server job ID:  jba5a97cdaafc4013b3140f82b75186f5 DataFetcher.ts:117:14
+Job Status:  job-submitted 
+Object { _timer: 437, Symbol("Accessor-Handles"): null, Symbol("Accessor-Initialized"): true, … }
+DataFetcher.ts:119:75
+Job Status:  job-executing 
+Object { _timer: 437, Symbol("Accessor-Handles"): null, Symbol("Accessor-Initialized"): true, … }
+DataFetcher.ts:119:75
+Job Status:  job-executing 
+Object { _timer: 437, Symbol("Accessor-Handles"): null, Symbol("Accessor-Initialized"): true, … }
+DataFetcher.ts:119:75
+Uncaught (in promise) 
+Object { _timer: undefined, Symbol("Accessor-Handles"): null, Symbol("Accessor-Initialized"): true, … }
+
+
+{
+ "jobId": "j6be4a9305b6245029860e06c79601e50",
+ "jobStatus": "esriJobExecuting",
+ "progress": {
+  "type": "default",
+  "message": "Executing..."
+ },
+ "messages": [
+  {
+   "type": "esriJobMessageTypeInformative",
+   "description": "Submitted."
+  },
+  {
+   "type": "esriJobMessageTypeInformative",
+   "description": "Executing..."
+  },
+  {
+   "type": "esriJobMessageTypeInformative",
+   "description": "Start Time: Tuesday, December 12, 2023 6:08:17 PM"
+  },
+  {
+   "type": "esriJobMessageTypeInformative",
+   "description": ""
+  },
+  {
+   "type": "esriJobMessageTypeInformative",
+   "description": "false"
+  },
+  {
+   "type": "esriJobMessageTypeInformative",
+   "description": "\u003cclass 'str'\u003e"
+  },
+  {
+   "type": "esriJobMessageTypeInformative",
+   "description": "starting tool"
+  },
+  {
+   "type": "esriJobMessageTypeInformative",
+   "description": "look behind you Eric.  Now I'm over here.  Not there!  Here!"
+  },
+  {
+   "type": "esriJobMessageTypeInformative",
+   "description": "{'AGL': {'0': 222, '1': 189, '2': 172, '3': 151}, 'WKID': {'0': 4326, '1': 4326, '2': 4326, '3': 4326}, 'Notes': {'0': 'Renaissance Center', '1': 'Ally Detroit Center', '2': 'Penobscot Building', '3': 'Guardian Building'}, 'Longitude': {'0': -83.0397422587, '1': -83.0449315211, '2': -83.0475250285, '3': -83.046172202}, 'Latitude': {'0': 42.3290091624, '1': 42.3300600783, '2': 42.3305252523, '3': 42.3299582968}}"
+  },
+  {
+   "type": "esriJobMessageTypeInformative",
+   "description": "   AGL  WKID  ...   Latitude                                              SHAPE\n0  222  4326  ...  42.329009  {\"spatialReference\": {\"wkid\": 4326}, \"x\": -83....\n1  189  4326  ...  42.330060  {\"spatialReference\": {\"wkid\": 4326}, \"x\": -83....\n2  172  4326  ...  42.330525  {\"spatialReference\": {\"wkid\": 4326}, \"x\": -83....\n3  151  4326  ...  42.329958  {\"spatialReference\": {\"wkid\": 4326}, \"x\": -83....\n\n[4 rows x 6 columns]"
+  },
+  {
+   "type": "esriJobMessageTypeInformative",
+   "description": "\u003cclass 'pandas.core.frame.DataFrame'\u003e"
+  },
+  {
+   "type": "esriJobMessageTypeInformative",
+   "description": "['Latitude', 'Longitude', 'AGL', 'WKID', 'Notes']"
+  },
+  {
+   "type": "esriJobMessageTypeInformative",
+   "description": "preprocess complete"
+  },
+  {
+   "type": "esriJobMessageTypeInformative",
+   "description": "Succeeded at Tuesday, December 12, 2023 6:08:23 PM (Elapsed Time: 6.65 seconds)"
+  }
+ ]
+}

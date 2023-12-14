@@ -10,14 +10,19 @@ import { ImportDataPanel } from './ImportDataPanel';
 export const SelectFields = () => {
   // @ts-ignore
   const [dataContext, dataDispatch] = useContext(DataContext) 
+  // @ts-ignore
+  const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
   const [fieldMap, setFieldMap] = useState({Latitude:'', Longitude:'', AGL:'', WKID:'', Notes:''});
-  // useEffect(() => console.log('dataContext.gpIngestReturn', dataContext.gpIngestReturn), [dataContext])
+
   const onClick = ( { target: { value, parentNode: { name } } }: {target: any}) => {
     name 
       ? setFieldMap({...fieldMap, [name]: value}) 
       : ''
     dataDispatch({ type: 'fieldMap', payload: fieldMap })
   }
+  // useEffect(() => console.log('fieldMatch', dataContext),[dataContext]);
+  // useEffect(() => console.log('fieldMatch', appContext),[appContext]);
+  useEffect(() => dataDispatch({ type: 'fieldMap', payload: fieldMap }),[fieldMap]);
 
   return (
     <>
@@ -42,13 +47,13 @@ export const SelectFields = () => {
 export const ShowImportSuccessModal = () => {
   // @ts-ignore
   const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
-  useEffect(() => console.log(appContext.requestType),[appContext.requestType]);
+  // useEffect(() => console.log(appContext.requestType),[appContext.requestType]);
   appContext.dataStatus === LoadingStatus.SUCCESS && document.getElementById('importSuccess')?.showModal()
   appContext.dataStatus === LoadingStatus.SUCCESS && setTimeout(() => document.getElementById('importSuccess')?.close(), 1000)
   return <AlertModal text="DATA IMPORTED SUCCESSFULLY" id="importSuccess" alertType="alert-info" /> 
 }
 
-export const UploadButton = ({ text, color, textColor, alertProps, active="btn-active", modal="" }) => {
+export const UploadButton = ({ text, color, textColor, dataStatus }) => {
   // @ts-ignore
   const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
   // @ts-ignore
@@ -57,7 +62,9 @@ export const UploadButton = ({ text, color, textColor, alertProps, active="btn-a
   return (
   <>
     <button 
-      className={`btn rounded btn-wide opacity-80 ${color} ${active}`}
+      className={`btn rounded btn-wide opacity-80 ${color} 
+        ${appContext.currentDataState === dataStatus ? 'btn-active' : 'btn-disabled'} 
+      `}
       onClick={handleClick}
     >
       <p className={textColor}>{text}</p>
@@ -66,31 +73,51 @@ export const UploadButton = ({ text, color, textColor, alertProps, active="btn-a
   )
 }
 
-export const PreprocessButton = ({ text, color, textColor, alertProps, active="btn-active", modal="" }) => {
+export const PreprocessButton = ({ text, color, textColor, dataStatus}) => {
   // @ts-ignore
   const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
   // @ts-ignore
   const [dataContext, dataDispatch] = useContext(DataContext)
-  // appDispatch({ type: 'requestType', payload: RequestType.PREPROCESS })
   const handleClick = () => {
-    fetchGeoprocessData(dataContext, dataDispatch, appContext, appDispatch, );
+    fetchGeoprocessData(dataContext, dataDispatch, appContext, appDispatch);
   }
   return (
   <>
-  {  <button 
-      className={`btn rounded btn-wide opacity-80 ${color} ${active}`}
+    <button 
+      className={`btn rounded btn-wide opacity-80 ${color} 
+        ${appContext.currentDataState === dataStatus ? 'btn-active' : 'btn-disabled'} 
+      `}
       onClick={handleClick}
     >
       <p className={textColor}>{text}</p>
-    </button>}
+    </button>
   </>
   )
 }
 
+// export const PublishButton = ({ text, color, textColor, alertProps, active="btn-active", modal="" }) => {
+//   // @ts-ignore
+//   const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
+//   // @ts-ignore
+//   const [dataContext, dataDispatch] = useContext(DataContext)
+//   const handleClick = () => {
+//     fetchGeoprocessData(dataContext, dataDispatch, appContext, appDispatch);
+//   }
+//   return (
+//   <>
+//   {  <button 
+//       className={`btn rounded btn-wide opacity-80 ${color} ${active}`}
+//       onClick={handleClick}
+//     >
+//       <p className={textColor}>{text}</p>
+//     </button>}
+//   </>
+//   )
+// }
+
 export const Button = ({ text, color, textColor, alertProps, dataStatus, modal="", handleClick=(()=>alert('butt on'))}: ButtonProps) => {
   // @ts-ignore
   const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
-  // console.log('dataStatus', dataStatus);
   return ( 
   <>
     {modal === "import" 
@@ -156,8 +183,7 @@ export const Spinner = () => {
   const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
   return (
     <>
-     { appContext.currentDataState === DataStatus.DATAIMPORTED 
-       && appContext.dataStatus === LoadingStatus.LOADING 
+     {  appContext.dataStatus === LoadingStatus.LOADING 
        && <img src={spinnerGif} className='' alt='Loading' /> }
     </>
   )

@@ -6,6 +6,7 @@ export enum Basemaps {
 }
 
 export enum LoadingStatus {
+  WAITING = "waiting",
   LOADING = "loading",
   SUCCESS = "success",
   ERROR = "error",
@@ -49,8 +50,10 @@ export enum DataStatus {
 }
 
 export enum RequestType {
+  IMPORT = "Import",
   INGEST = "Ingest",
   PREPROCESS = "Preprocess",
   UPLOAD = "Upload",
+  COMPLETED = "Completed",
   FETCH = "Fetch"
 }
