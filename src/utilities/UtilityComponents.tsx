@@ -7,15 +7,29 @@ import { AppContext2 } from '../contexts/AppStore2';
 import spinnerGif from '../assets/1496.gif'
 import { ImportDataPanel } from './ImportDataPanel';
 
-export const StatusBox = ({ text, textColor, color, dataStatus }) => {
+export const MessageBox = ({ textColor, color }) => {
   // @ts-ignore
   const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
-  useEffect(() => console.log(appContext.currentDataState), [appContext])
+  const [statusMessage, setStatusMessage] = useState<string>('Server Status Message');
+  useEffect(() => setStatusMessage(appContext.geoprocessingMessages.message), [appContext.geoprocessingMessages] );
 
   return (
    <>
-      { appContext.currentDataState === dataStatus 
-        && <p className={`${textColor} ${color} h-full rounded-lg p-4 text-center`}>{text}</p>
+      <p className={`${textColor} ${color} h-full rounded-lg p-4 text-center place-content-center`}>
+        {statusMessage}
+      </p>
+      
+   </>
+  )
+}
+
+export const StatusBox = ({ text, textColor, color, dataStatus }) => {
+  // @ts-ignore
+  const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
+  return (
+   <>
+      { appContext.currentDataState >= dataStatus 
+        && <p className={`${textColor} ${color} h-full rounded-lg p-4 text-center place-content-center`}>{text}</p>
       }
    </>
   )

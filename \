@@ -5,7 +5,7 @@ export type Action = {
     payload?: any
 }
 
-export type GeoprocessingMessages = {
+export type GeoprocessMessages = {
   type: string;
   currentDataState: DataStatus;
   message: string;
@@ -24,7 +24,6 @@ export interface AppContextInterface2 {
   basemap: Basemaps;
   cameraLocation: CameraPosition;
   geoprocessingParams: GeoprocessingParams;
-  geoprocessingMessages: GeoprocessingMessages;
 }
 
 export interface AppAction2 {
@@ -34,7 +33,6 @@ export interface AppAction2 {
   BASEMAP: string;
   CAMERALOCATION: string;
   GEOPROCESSINGPARAMS: string;
-  GEOPROCESSINGMESSAGES: string;
   MULTIPLE: string;
 }
 

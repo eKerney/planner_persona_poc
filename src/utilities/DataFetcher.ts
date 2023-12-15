@@ -49,7 +49,19 @@ export const fetchGeoprocessData = (dataContext: DataContextInterface, dataDispa
     geoprocessor.submitJob((`${baseGPurl}${gpToolURL}`), gpParams).then((jobInfo) => {
       console.log("ArcGIS Server job ID: ", jobInfo.jobId);
 
-      const options = { interval: 1500, statusCallback: (j: any) => console.log("Job Status: ", j.jobStatus, j.messages, j.messages.length > 0 ? j.messages[j.messages.length-1].description : '')};
+      const options = { 
+        interval: 1500, 
+        statusCallback: (j: any) => {
+          console.log("Job Status: ", j.jobStatus, j.messages, j.messages.length > 0 
+              ? j.messages[j.messages.length-1].description 
+              : '')
+          appDispatch({ type: 'geoprocessingMessages', payload: {
+            type: 'jobStatus', 
+            currentDataState: appContext.currentDataState,
+            messages: j.jobStatus 
+          }})
+        }
+      };
 
       jobInfo.waitForJobCompletion(options).then(() => {
         const gpIngestReturn: GPingestReturn = { Return_Fields: '', Return_df_Json: {}, Return_Req_Fields: ''}

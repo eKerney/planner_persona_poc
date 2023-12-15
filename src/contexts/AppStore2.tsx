@@ -9,7 +9,8 @@ const appActionType: AppAction2 = {
   BASEMAP: 'basemap',
   CAMERALOCATION: 'cameraLocation',
   MULTIPLE: 'multiple',
-  GEOPROCESSINGPARAMS: 'geoprocessingParams'
+  GEOPROCESSINGPARAMS: 'geoprocessingParams',
+  GEOPROCESSINGMESSAGES: 'geoprocessingMessages'
 }
 
 const locations: {[key: string]: CameraPosition} = {
@@ -28,7 +29,8 @@ export const initialAppState: AppContextInterface2 = {
   currentDataState: DataStatus.DATAIMPORTED,
   basemap: Basemaps.DARK_GRAY,
   cameraLocation: locations['Detroit'],
-  geoprocessingParams: { FIle: {itemID: ''}, Data_Type: '', Ingest_Trigger: false, Preprocess_Trigger: false, Upload_Trigger: false, Field_Map: {}, JSON_data: {} }
+  geoprocessingParams: { FIle: {itemID: ''}, Data_Type: '', Ingest_Trigger: false, Preprocess_Trigger: false, Upload_Trigger: false, Field_Map: {}, JSON_data: {} },
+  geoprocessingMessages: { type: '', currentDataState: DataStatus.DATAIMPORTED, message: 'Server Status Message' }
 }
 
 export const AppContext2 = createContext(initialAppState) 
@@ -48,6 +50,8 @@ export const AppStore2 = ({ children }) => {
         return {...state, cameraLocation: action.payload}
       case appActionType.GEOPROCESSINGPARAMS:
         return {...state, geoprocessingParams: action.payload}
+      case appActionType.GEOPROCESSINGMESSAGES:
+        return {...state, geoprocessingMessages: action.payload}
       case appActionType.MULTIPLE:
         return {...state, ...action.payload}
       default:

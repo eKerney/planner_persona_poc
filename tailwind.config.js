@@ -14,6 +14,7 @@ export default {
         'deep-sky-500': '#0E7DE8',
         'hadopelagic': '#04041F',
         'long-haul': '#052176',
+        'galactic-200': '#9586BF',
         'galactic-500': '#3E238B',
         'galactic-600': '#5C238B',
         'mars-red': '#BB252D',

@@ -40,13 +40,13 @@ export enum GeometryType {
 } 
 
 export enum DataStatus {
-  DATAIMPORTED = "Data Imported",
-  DATASUBMITTED = "Data Submitted",
-  FIELDSRETURNED = "Fields Returned",
-  FIELDSMATCHED = "Fields Matched",
-  DATAAPPROVED = "Data Approved",
-  IMPORTTODATABASE = "Imported to Database",
-  DATADENIED = "Data Denied"
+  DATAIMPORTED = 0,
+  DATASUBMITTED = 1,
+  FIELDSRETURNED = 2,
+  FIELDSMATCHED = 3,
+  DATAAPPROVED = 4,
+  IMPORTTODATABASE = 5,
+  DATADENIED = 6
 }
 
 export enum RequestType {

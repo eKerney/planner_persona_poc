@@ -1,47 +1,45 @@
 import { DataStatus } from "../types/enums"
-import { StatusBox } from "../utilities/UtilityComponents"
+import { MessageBox, StatusBox } from "../utilities/UtilityComponents"
 
 
 export const TopInfoBar = () => {
   return (
-    <div id='topNav' className='border border-deep-sky-500 border-2 rounded-lg shadow-xl row-span-1 grid grid-cols-5  '>
+    <div id='topNav' className='border border-deep-sky-500 border-2 rounded-lg shadow-xl row-span-1 grid grid-cols-6 '>
+      <div className='border border-long-haul border-2 rounded-lg my-0.5 col-span-2'>
+        <MessageBox     
+          textColor="text-deep-sky-200"
+          color="bg-long-haul/10"
+        />
+      </div>
       <div className='border border-long-haul border-2 rounded-lg my-0.5 '>
         <StatusBox
           text="DATA IMPORTED" 
           textColor="text-deep-sky-200"
-          color="bg-info"
-          dataStatus={DataStatus.DATAIMPORTED}
+          color="bg-long-haul/20"
+          dataStatus={DataStatus.DATASUBMITTED}
         />
       </div>
       <div className='border border-long-haul border-2 rounded-lg my-0.5 '>
         <StatusBox
           text="DATA UPLOADED" 
           textColor="text-deep-sky-200"
-          color="bg-primary"
-          dataStatus={DataStatus.DATASUBMITTED}
+          color="bg-long-haul/40"
+          dataStatus={DataStatus.FIELDSRETURNED}
         />
       </div>
       <div className='border border-long-haul border-2 rounded-lg my-0.5 '>
         <StatusBox
           text="DATA FIELDS MATCHED" 
           textColor="text-deep-sky-200"
-          color="bg-secondary"
-          dataStatus={DataStatus.FIELDSRETURNED}
+          color="bg-long-haul/60"
+          dataStatus={DataStatus.FIELDSMATCHED}
         />
       </div>
       <div className='border border-long-haul border-2 rounded-lg my-0.5 '>
         <StatusBox
           text="DATA PUBLISHED" 
           textColor="text-deep-sky-200"
-          color="bg-success"
-          dataStatus={DataStatus.FIELDSMATCHED}
-        />
-      </div>
-      <div className='border border-long-haul border-2 rounded-lg my-0.5 '>
-        <StatusBox
-          text="PUBLISHING COMPLETED" 
-          textColor="text-deep-sky-200"
-          color="bg-accent"
+          color="bg-long-haul/80"
           dataStatus={DataStatus.DATAAPPROVED}
         />
       </div>
