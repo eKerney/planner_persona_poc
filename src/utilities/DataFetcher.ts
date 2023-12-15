@@ -92,7 +92,6 @@ export const fetchGeoprocessData = (dataContext: DataContextInterface, dataDispa
 
     geoprocessor.submitJob((`${baseGPurl}${gpToolURL}`), gpParams).then((jobInfo) => {
       console.log("ArcGIS Server job ID: ", jobInfo.jobId);
-      // const options = { interval: 1500, statusCallback: (j: any) => console.log("Job Status: ", j.jobStatus, j)};
       const options = { interval: 1500, statusCallback: (j: any) => console.log("Job Status: ", j.jobStatus, j.messages, j.messages.length > 0 ? j.messages[j.messages.length-1].description : '')};
 
       jobInfo.waitForJobCompletion(options).then(() => {
@@ -123,7 +122,6 @@ export const fetchGeoprocessData = (dataContext: DataContextInterface, dataDispa
 
     geoprocessor.submitJob((`${baseGPurl}${gpToolURL}`), gpParams).then((jobInfo) => {
       console.log("ArcGIS Server job ID: ", jobInfo.jobId);
-      // const options = { interval: 500, statusCallback: (j: any) => console.log("Job Status: ", j.jobStatus, j)};
       const options = { interval: 1500, statusCallback: (j: any) => console.log("Job Status: ", j.jobStatus, j.messages, j.messages.length > 0 ? j.messages[j.messages.length-1].description : '')};
 
       jobInfo.waitForJobCompletion(options).then(() => {

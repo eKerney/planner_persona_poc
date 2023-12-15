@@ -3,6 +3,7 @@ import ArcGISmap from './components/ArcGISmap'
 import RootLayout from './components/Layout'
 import MapLayer from './components/MapLayer'
 import ToolPanel from './components/ToolPanel'
+import TopInfoBar from './components/TopInfoBar'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
             <MapLayer />
           </ArcGISmap>} 
         ToolPanel={<ToolPanel />}  
+        TopInfoBar={<TopInfoBar />}
       />
     </>
   )

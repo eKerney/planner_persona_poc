@@ -7,6 +7,20 @@ import { AppContext2 } from '../contexts/AppStore2';
 import spinnerGif from '../assets/1496.gif'
 import { ImportDataPanel } from './ImportDataPanel';
 
+export const StatusBox = ({ text, textColor, color, dataStatus }) => {
+  // @ts-ignore
+  const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
+  useEffect(() => console.log(appContext.currentDataState), [appContext])
+
+  return (
+   <>
+      { appContext.currentDataState === dataStatus 
+        && <p className={`${textColor} ${color} h-full rounded-lg p-4 text-center`}>{text}</p>
+      }
+   </>
+  )
+}
+
 export const SelectFields = () => {
   // @ts-ignore
   const [dataContext, dataDispatch] = useContext(DataContext) 
@@ -26,7 +40,9 @@ export const SelectFields = () => {
 
   return (
     <>
-      { dataContext.gpIngestReturn.Return_Req_Fields.length > 0 && dataContext.gpIngestReturn.Return_Req_Fields.map((label:string) => {
+      { dataContext.gpIngestReturn.Return_Req_Fields.length > 0 
+        && appContext.currentDataState === DataStatus.FIELDSRETURNED
+        && dataContext.gpIngestReturn.Return_Req_Fields.map((label:string) => {
         return (
         <label key={`${label}-Required`} className="form-control w-full max-w-xs">
           <div className="label">
@@ -68,6 +84,10 @@ export const UploadButton = ({ text, color, textColor, dataStatus }) => {
       onClick={handleClick}
     >
       <p className={textColor}>{text}</p>
+      {  appContext.dataStatus === LoadingStatus.LOADING 
+         && appContext.currentDataState === dataStatus 
+         && <span className="loading loading-spinner text-primary"></span>
+      }
     </button>
   </>
   )
@@ -90,30 +110,14 @@ export const PreprocessButton = ({ text, color, textColor, dataStatus}) => {
       onClick={handleClick}
     >
       <p className={textColor}>{text}</p>
+      {  appContext.dataStatus === LoadingStatus.LOADING 
+         && appContext.currentDataState === dataStatus 
+         && <span className="loading loading-spinner text-primary"></span>
+      }
     </button>
   </>
   )
 }
-
-// export const PublishButton = ({ text, color, textColor, alertProps, active="btn-active", modal="" }) => {
-//   // @ts-ignore
-//   const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
-//   // @ts-ignore
-//   const [dataContext, dataDispatch] = useContext(DataContext)
-//   const handleClick = () => {
-//     fetchGeoprocessData(dataContext, dataDispatch, appContext, appDispatch);
-//   }
-//   return (
-//   <>
-//   {  <button 
-//       className={`btn rounded btn-wide opacity-80 ${color} ${active}`}
-//       onClick={handleClick}
-//     >
-//       <p className={textColor}>{text}</p>
-//     </button>}
-//   </>
-//   )
-// }
 
 export const Button = ({ text, color, textColor, alertProps, dataStatus, modal="", handleClick=(()=>alert('butt on'))}: ButtonProps) => {
   // @ts-ignore
@@ -129,7 +133,11 @@ export const Button = ({ text, color, textColor, alertProps, dataStatus, modal="
       `}
       onClick={handleClick}
     >
-      <p className={textColor}>{text}</p>
+      <p className={textColor}>{text}&nbsp;&nbsp;</p>
+      {  appContext.dataStatus === LoadingStatus.LOADING 
+         && appContext.currentDataState === dataStatus 
+         && <span className="loading loading-spinner text-primary"></span>
+      }
     </button>
   </>
   )

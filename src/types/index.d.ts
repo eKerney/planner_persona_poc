@@ -105,6 +105,7 @@ export type GeoJSONfeatureCollection = {
 export interface LayoutProps {
   ArcMap: JSX.Element;
   ToolPanel: JSX.Element;
+  TopInfoBar: JSX.Element;
 }
 
 export interface ButtonProps {
