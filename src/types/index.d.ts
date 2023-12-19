@@ -1,4 +1,4 @@
-import { Basemaps, DataStatus, DataType, GeometryType, LoadingStatus, RequestType } from "./enums";
+import { Basemaps, DataStatus, DataType, GeometryType, LayerType, LoadingStatus, RequestType } from "./enums";
 
 export type Action = {
     type: string
@@ -60,7 +60,7 @@ export type GPreturnData = {
 
 export interface DataContextInterface {
   dataForm: HTMLFormElement;
-  dataType: DataType; 
+  dataLayerAttributes: DataLayerAttributes;
   dataSource: DataSource;
   geometryType: GeometryType;
   GeoJSONfeatureCollection: GeoJSONfeatureCollection;
@@ -73,6 +73,11 @@ export interface DataContextInterface {
   gpPreprocessReturn: GPreturnData;
   gpUploadReturn: GPreturnData;
   fieldMap: object;
+}
+
+export interface DataLayerAttributes {
+  dataType: DataType;
+  layerType: LayerType;
 }
 
 export interface DataAction {

@@ -3,7 +3,7 @@ import { LayoutProps } from "../types";
 export const RootLayout = ({ ArcMap, ToolPanel, TopInfoBar}: LayoutProps) => {
   return (
           <div id='root' className='bg-asl-black grid grid-cols-12 grid-rows-4 h-screen grid-flow-row-dense p-2 gap-4' >
-            <div id='leftDrawer' className='border border-deep-sky-500 border-2 bg-dark-grey-200 rounded-lg shadow-xl h-screen row-span-5 col-span-3 '> 
+            <div id='leftDrawer' className='border border-deep-sky-500 border-2 bg-dark-grey-200 rounded-lg shadow-xl h-screen row-span-5 col-span-3 justify-center '> 
               {ToolPanel}
             </div>
             <div className='rounded-lg shadow-xl h-screen col-span-9 grid grid-rows-6 gap-4 '>

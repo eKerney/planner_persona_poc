@@ -3,10 +3,11 @@ import { DataStatus, DataType, GeometryType, LoadingStatus } from "../types/enum
 
 export const fileLoader = (rawData: any, appContext: AppContextInterface2, appDispatch: any, dataContext: DataContextInterface, dataDispatch: any) => {
   appDispatch({ type: 'dataStatus', payload: LoadingStatus.LOADING });
-      console.log('DataLoader');
+      console.log('DataLoader', dataContext.dataLayerAttributes);
 
-  switch (dataContext.dataType) {
+  switch (dataContext.dataLayerAttributes.dataType) {
     case DataType.GEOJSON:
+      console.log('inGEOJSON');
       const parsedGeoJSON = JSON.parse(rawData)
       const blobData = new Blob([JSON.stringify(parsedGeoJSON)], { type: "application/json" });
       dataDispatch({ type: 'multiple', payload: {GeoJSONfeatureCollection: parsedGeoJSON, blob: URL.createObjectURL(blobData)} })
@@ -19,11 +20,18 @@ export const fileLoader = (rawData: any, appContext: AppContextInterface2, appDi
         }
       }})
       break;
-    case DataType.KML:
-      const parsedKML = JSON.parse(rawData)
-      dataDispatch({ type: 'geoJSONfeatureCollection', payload: parsedKML })
-      appDispatch({ type: 'dataStatus', payload: LoadingStatus.SUCCESS })
-      appDispatch({ type: 'currentDataState', payload: DataStatus.DATASUBMITTED })
+    case DataType.KMZ:
+      console.log('inKMZ');
+      // const parsedKML = JSON.parse(rawData)
+      // dataDispatch({ type: 'geoJSONfeatureCollection', payload: parsedKML })
+      appDispatch({ type: 'multiple', payload: {
+        dataStatus: LoadingStatus.SUCCESS, 
+        currentDataState: DataStatus.DATASUBMITTED,
+        geoprocessingMessages: { type: 'jobStatus', 
+          currentDataState: appContext.currentDataState, 
+          message: 'Data Imported'
+        }
+      }})
       break;
     default:
         return LoadingStatus.ERROR 

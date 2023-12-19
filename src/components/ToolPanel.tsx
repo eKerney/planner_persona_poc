@@ -1,5 +1,5 @@
 import { DataStatus } from "../types/enums";
-import { MultiButton, SelectFields, ShowImportSuccessModal } from "../utilities/UtilityComponents";
+import { DataTable, MultiButton, SelectFields, ShowImportSuccessModal } from "../utilities/UtilityComponents";
 
 
 export const ToolPanel = () => {
@@ -51,7 +51,7 @@ export const ToolPanel = () => {
           dataStatus={DataStatus.FIELDSMATCHED}
           alertProps={{text: " SUCCESS", id:"importDialog", alertType: "alert"}}
         />
-
+        <br/><br/>
 
       </div>
     </div>

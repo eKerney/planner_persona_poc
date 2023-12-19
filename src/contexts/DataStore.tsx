@@ -1,10 +1,10 @@
 import { createContext, useReducer } from "react";
 import { Action, DataAction, DataContextInterface } from "../types"; 
-import { DataSource, DataType, GeometryType } from "../types/enums";
+import { DataSource, DataType, GeometryType, LayerType } from "../types/enums";
 
 const dataActionType: DataAction = {
   DATAFORM: 'dataForm',
-  DATATYPE: 'dataType', 
+  DATALAYERATTRIBUTES: 'dataLayerAttributes',
   DATASOURCE: 'dataSource',
   GEOMETRYTYPE: 'geometryType',
   GEOJSONFEATURECOLLECTION: 'geoJSONfeatureCollection',
@@ -22,8 +22,8 @@ const dataActionType: DataAction = {
 
 export const initialDataState: DataContextInterface = {
   dataForm: document.createElement("form"),
-  dataType: DataType.GEOJSON,
-  dataSource: DataSource.EMPTY,
+  dataLayerAttributes: { dataType: DataType.GEOJSON, layerType: LayerType.OBSTACLES },
+  dataSource: DataSource.FILE,
   geometryType: GeometryType.EMPTY,
   GeoJSONfeatureCollection: { type: '', features: [] },
   fields: [],
@@ -45,8 +45,8 @@ export const DataStore = ({ children }: { children: any }) => {
     switch (action.type) {
       case dataActionType.DATAFORM:
         return {...state, dataForm: action.payload}
-      case dataActionType.DATATYPE:
-        return {...state, dataType: action.payload}
+      case dataActionType.DATALAYERATTRIBUTES:
+        return {...state, dataLayerAttributes: action.payload}
       case dataActionType.DATASOURCE:
         return {...state, dataSource: action.payload}
       case dataActionType.GEOMETRYTYPE:

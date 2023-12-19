@@ -46,6 +46,7 @@ export const useGeoprocessTool = () => {
   // GP Tool Ingest Request
   const ETLgeoProcessingIngest = (gpParams: GeoprocessingParams, baseGPurl: string, gpUploadURL: string, gpToolURL: string) => {
     console.log('ETLgeoProcessingIngest');
+    console.log('ETLgeoProcessingIngest', dataContext.dataForm);
     appDispatch({ type: 'multiple', payload: {dataStatus: LoadingStatus.LOADING, currentDataState: DataStatus.DATASUBMITTED}})
     const uploadSucceeded = (response: any) => {
       const itemID = response["data"]["item"].itemID;

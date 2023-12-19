@@ -27,6 +27,7 @@ export enum DataType {
   GEODATAFRAME = "geodataframe",
   SHAPEFILE = "shapefile",
   KML = "kml",
+  KMZ = "kmz",
   GEODATABASE = "geodatabase",
   GEOPARQUET = "geoparquet",
   EMPTY = "empty",
@@ -56,4 +57,10 @@ export enum RequestType {
   UPLOAD = "Upload",
   COMPLETED = "Completed",
   FETCH = "Fetch"
+}
+
+export enum LayerType {
+  OBSTACLES = "Obstacles",
+  PARCELS = "Parcels",
+  EMPTY = "empty"
 }

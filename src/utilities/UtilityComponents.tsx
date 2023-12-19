@@ -2,7 +2,7 @@ import { useEffect, useContext, useState } from 'react';
 import { AlertProps, AppContextInterface2, BaseComponentProps, ButtonProps, DataContextInterface } from "../types";
 import { AppContext2 } from '../contexts/AppStore2';
 import { useGeoprocessTool } from '../hooks/useGeoprocessTool';
-import { DataStatus, LoadingStatus } from '../types/enums';
+import { DataStatus, DataType, LayerType, LoadingStatus } from '../types/enums';
 import { DataContext } from '../contexts/DataStore';
 import { ImportDataPanel } from './ImportDataPanel';
 
@@ -12,7 +12,6 @@ export const MessageBox = ({ textColor, color }: BaseComponentProps): JSX.Elemen
   const [statusMessage, setStatusMessage] = useState<string>('Data Status Message');
 
   useEffect(() => {
-    console.log('geoprocessingMessages', appContext.geoprocessingMessages)
     setStatusMessage(appContext.geoprocessingMessages.message)
     }, [appContext.geoprocessingMessages])
 
@@ -90,7 +89,7 @@ export const MultiButton = ({ text, color, textColor, dataStatus, alertProps, on
   <>
     {text === "IMPORT DATA" 
       ? <ImportModal text={alertProps.text} id={alertProps.id} alertType={alertProps.alertType} /> 
-        : <AlertModal text={alertProps.text} id={alertProps.id} alertType={alertProps.alertType} /> }
+      : <></> }
     <button 
       className={`btn rounded btn-wide opacity-80 ${color} 
         ${appContext.currentDataState === dataStatus ? 'btn-active' : 'btn-disabled'} 
@@ -150,12 +149,75 @@ export const ShowImportSuccessModal = () => {
 }
 
 export const DataLayerPicker = () => {
+  // @ts-ignore
+  const [dataContext, dataDispatch] = useContext<DataContextInterface>(DataContext) 
+  const [layer, setLayer] = useState<LayerType>(LayerType.OBSTACLES);
+
+  const onClick = ({ target: { value }}: {target: any}) => setLayer(value)
+  useEffect(() => dataDispatch({ type: 'dataLayerAttributes', payload: {...dataContext.dataLayerAttributes, layerType: layer} }),[layer]);
+
   return (
-  <select className="select select-info w-full max-w-xs text-deep-sky-200">
-    <option disabled>SELECT DATA TYPE</option>
-    <option>Obstacles</option>
-    <option>Parcels</option>
+  <select name="dataLayerPicker" className="select select-info w-full max-w-xs text-deep-sky-200" onClick={onClick}>
+    <option disabled>SELECT DATA LAYER</option>
+    <option>{LayerType.OBSTACLES}</option>
+    <option>{LayerType.PARCELS}</option>
   </select>
   )
 }
 
+export const DataTypePicker = () => {
+  // @ts-ignore
+  const [dataContext, dataDispatch] = useContext<DataContextInterface>(DataContext) 
+  const [dataType, setDataType] = useState<DataType>(DataType.GEOJSON);
+
+  const onClick = ({ target: { value }}: {target: any}) => setDataType(value)
+  useEffect(() => dataDispatch({ type: 'dataLayerAttributes', payload: {...dataContext.dataLayerAttributes, dataType: dataType} }),[dataType]);
+
+  return (
+  <select name="dataLayerPicker" className="select select-info w-full max-w-xs text-deep-sky-200" onClick={onClick}>
+    <option disabled>SELECT DATA LAYER</option>
+    <option>{DataType.GEOJSON}</option>
+    <option>{DataType.KMZ}</option>
+    <option>{DataType.KML}</option>
+  </select>
+  )
+}
+
+export const DataTable = () => {
+  return (
+  <>
+    <div className="overflow-x-auto form-control flex justify-center">
+      <table className="table ">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Job</th>
+            <th>Favorite Color</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>1</th>
+            <td>Cy Ganderton</td>
+            <td>Quality Control Specialist</td>
+            <td>Blue</td>
+          </tr>
+          <tr className="hover">
+            <th>2</th>
+            <td>Hart Hagerty</td>
+            <td>Desktop Support Technician</td>
+            <td>Purple</td>
+          </tr>
+          <tr>
+            <th>3</th>
+            <td>Brice Swyre</td>
+            <td>Tax Accountant</td>
+            <td>Red</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </>
+  )
+}
