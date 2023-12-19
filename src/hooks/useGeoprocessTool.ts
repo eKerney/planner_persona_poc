@@ -36,7 +36,7 @@ export const useGeoprocessTool = () => {
       appDispatch({ type: 'geoprocessingMessages', payload: {
         type: 'jobStatus', 
         currentDataState: appContext.currentDataState,
-        messages: j.messages.length > 0 
+        message: j.messages.length > 0 
           ? j.messages[j.messages.length-1].description 
           : ''
       }})
@@ -146,6 +146,13 @@ export const useGeoprocessTool = () => {
       console.log("ArcGIS Server job ID: ", jobInfo.jobId);
 
       jobInfo.waitForJobCompletion(options).then(() => {
+        jobInfo.fetchResultData("Return_Append_Count").then((data) => {
+          appDispatch({ type: 'geoprocessingMessages', payload: {
+            type: 'jobStatus', 
+            currentDataState: appContext.currentDataState,
+            message: `NEW FEATURES ADDED: ${data.value}`
+          }})
+        });
         jobInfo.fetchResultData("Return_df_Json").then((data) => {
           console.log('Upload Complete', data.value)
           appDispatch({ type: 'dataStatus', payload: LoadingStatus.SUCCESS })

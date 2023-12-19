@@ -15,7 +15,7 @@ export const fileLoader = (rawData: any, appContext: AppContextInterface2, appDi
         currentDataState: DataStatus.DATASUBMITTED,
         geoprocessingMessages: { type: 'jobStatus', 
           currentDataState: appContext.currentDataState, 
-          messages: 'Data Imported'
+          message: 'Data Imported'
         }
       }})
       break;

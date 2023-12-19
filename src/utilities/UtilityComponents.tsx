@@ -9,7 +9,7 @@ import { ImportDataPanel } from './ImportDataPanel';
 export const MessageBox = ({ textColor, color }: BaseComponentProps): JSX.Element  => {
   // @ts-ignore
   const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
-  const [statusMessage, setStatusMessage] = useState<string>('Server Status Message');
+  const [statusMessage, setStatusMessage] = useState<string>('Data Status Message');
 
   useEffect(() => {
     console.log('geoprocessingMessages', appContext.geoprocessingMessages)

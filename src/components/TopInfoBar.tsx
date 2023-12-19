@@ -1,13 +1,12 @@
 import { DataStatus } from "../types/enums"
 import { MessageBox, StatusBox } from "../utilities/UtilityComponents"
 
-
 export const TopInfoBar = () => {
   return (
     <div id='topNav' className='border border-deep-sky-500 border-2 rounded-lg shadow-xl row-span-1 grid grid-cols-6 '>
       <div className='border border-long-haul border-2 rounded-lg my-0.5 col-span-2'>
         <MessageBox     
-          textColor="text-deep-sky-200"
+          textColor="text-deep-sky-500"
           color="bg-long-haul/10"
         />
       </div>

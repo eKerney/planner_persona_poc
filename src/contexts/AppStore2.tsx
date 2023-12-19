@@ -30,7 +30,7 @@ export const initialAppState: AppContextInterface2 = {
   basemap: Basemaps.DARK_GRAY,
   cameraLocation: locations['Detroit'],
   geoprocessingParams: { FIle: {itemID: ''}, Data_Type: '', Ingest_Trigger: false, Preprocess_Trigger: false, Upload_Trigger: false, Field_Map: {}, JSON_data: {} },
-  geoprocessingMessages: { type: '', currentDataState: DataStatus.DATAIMPORTED, message: 'Server Status Message' }
+  geoprocessingMessages: { type: '', currentDataState: DataStatus.DATAIMPORTED, message: 'DATA STATUS MESSAGE' }
 }
 
 export const AppContext2 = createContext(initialAppState) 
