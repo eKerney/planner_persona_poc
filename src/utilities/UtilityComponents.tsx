@@ -1,17 +1,20 @@
 import { useEffect, useContext, useState } from 'react';
-import { AlertProps, AppContextInterface2, ButtonProps } from "../types";
-import { DataContext } from '../contexts/DataStore';
-import { DataStatus, LoadingStatus } from '../types/enums';
-import { fetchGeoprocessData } from './DataFetcher';
+import { AlertProps, AppContextInterface2, BaseComponentProps, ButtonProps, DataContextInterface } from "../types";
 import { AppContext2 } from '../contexts/AppStore2';
-import spinnerGif from '../assets/1496.gif'
+import { useGeoprocessTool } from '../hooks/useGeoprocessTool';
+import { DataStatus, LoadingStatus } from '../types/enums';
+import { DataContext } from '../contexts/DataStore';
 import { ImportDataPanel } from './ImportDataPanel';
 
-export const MessageBox = ({ textColor, color }) => {
+export const MessageBox = ({ textColor, color }: BaseComponentProps): JSX.Element  => {
   // @ts-ignore
   const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
   const [statusMessage, setStatusMessage] = useState<string>('Server Status Message');
-  useEffect(() => setStatusMessage(appContext.geoprocessingMessages.message), [appContext.geoprocessingMessages] );
+
+  useEffect(() => {
+    console.log('geoprocessingMessages', appContext.geoprocessingMessages)
+    setStatusMessage(appContext.geoprocessingMessages.message)
+    }, [appContext.geoprocessingMessages])
 
   return (
    <>
@@ -23,7 +26,7 @@ export const MessageBox = ({ textColor, color }) => {
   )
 }
 
-export const StatusBox = ({ text, textColor, color, dataStatus }) => {
+export const StatusBox = ({ text, textColor, color, dataStatus = 0 }: BaseComponentProps): JSX.Element => {
   // @ts-ignore
   const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
   return (
@@ -37,7 +40,7 @@ export const StatusBox = ({ text, textColor, color, dataStatus }) => {
 
 export const SelectFields = () => {
   // @ts-ignore
-  const [dataContext, dataDispatch] = useContext(DataContext) 
+  const [dataContext, dataDispatch] = useContext<DataContextInterface>(DataContext) 
   // @ts-ignore
   const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
   const [fieldMap, setFieldMap] = useState({Latitude:'', Longitude:'', AGL:'', WKID:'', Notes:''});
@@ -48,8 +51,7 @@ export const SelectFields = () => {
       : ''
     dataDispatch({ type: 'fieldMap', payload: fieldMap })
   }
-  // useEffect(() => console.log('fieldMatch', dataContext),[dataContext]);
-  // useEffect(() => console.log('fieldMatch', appContext),[appContext]);
+  // useEffect to sync up dataContext with current fieldMap State
   useEffect(() => dataDispatch({ type: 'fieldMap', payload: fieldMap }),[fieldMap]);
 
   return (
@@ -74,80 +76,28 @@ export const SelectFields = () => {
   )
 }
 
-export const ShowImportSuccessModal = () => {
+export const MultiButton = ({ text, color, textColor, dataStatus, alertProps, onClickFunction}: ButtonProps): JSX.Element => {
   // @ts-ignore
   const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
-  // useEffect(() => console.log(appContext.requestType),[appContext.requestType]);
-  appContext.dataStatus === LoadingStatus.SUCCESS && document.getElementById('importSuccess')?.showModal()
-  appContext.dataStatus === LoadingStatus.SUCCESS && setTimeout(() => document.getElementById('importSuccess')?.close(), 1000)
-  return <AlertModal text="DATA IMPORTED SUCCESSFULLY" id="importSuccess" alertType="alert-info" /> 
-}
+  const callGeoprocessor = useGeoprocessTool();
+  const handleClick = onClickFunction
+    ? onClickFunction
+    : () => callGeoprocessor();
 
-export const UploadButton = ({ text, color, textColor, dataStatus }) => {
-  // @ts-ignore
-  const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
-  // @ts-ignore
-  const [dataContext, dataDispatch] = useContext(DataContext)
-  const handleClick = () => fetchGeoprocessData(dataContext, dataDispatch, appContext, appDispatch, dataContext.dataForm);
+  // const handleClick = () => callGeoprocessor();
+  
   return (
   <>
-    <button 
-      className={`btn rounded btn-wide opacity-80 ${color} 
-        ${appContext.currentDataState === dataStatus ? 'btn-active' : 'btn-disabled'} 
-      `}
-      onClick={handleClick}
-    >
-      <p className={textColor}>{text}</p>
-      {  appContext.dataStatus === LoadingStatus.LOADING 
-         && appContext.currentDataState === dataStatus 
-         && <span className="loading loading-spinner text-primary"></span>
-      }
-    </button>
-  </>
-  )
-}
-
-export const PreprocessButton = ({ text, color, textColor, dataStatus}) => {
-  // @ts-ignore
-  const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
-  // @ts-ignore
-  const [dataContext, dataDispatch] = useContext(DataContext)
-  const handleClick = () => {
-    fetchGeoprocessData(dataContext, dataDispatch, appContext, appDispatch);
-  }
-  return (
-  <>
-    <button 
-      className={`btn rounded btn-wide opacity-80 ${color} 
-        ${appContext.currentDataState === dataStatus ? 'btn-active' : 'btn-disabled'} 
-      `}
-      onClick={handleClick}
-    >
-      <p className={textColor}>{text}</p>
-      {  appContext.dataStatus === LoadingStatus.LOADING 
-         && appContext.currentDataState === dataStatus 
-         && <span className="loading loading-spinner text-primary"></span>
-      }
-    </button>
-  </>
-  )
-}
-
-export const Button = ({ text, color, textColor, alertProps, dataStatus, modal="", handleClick=(()=>alert('butt on'))}: ButtonProps) => {
-  // @ts-ignore
-  const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
-  return ( 
-  <>
-    {modal === "import" 
+    {text === "IMPORT DATA" 
       ? <ImportModal text={alertProps.text} id={alertProps.id} alertType={alertProps.alertType} /> 
         : <AlertModal text={alertProps.text} id={alertProps.id} alertType={alertProps.alertType} /> }
     <button 
       className={`btn rounded btn-wide opacity-80 ${color} 
-        ${appContext.currentDataState === dataStatus ? 'btn-active' : 'btn-disabled'}
+        ${appContext.currentDataState === dataStatus ? 'btn-active' : 'btn-disabled'} 
       `}
       onClick={handleClick}
     >
-      <p className={textColor}>{text}&nbsp;&nbsp;</p>
+      <p className={textColor}>{text}</p>
       {  appContext.dataStatus === LoadingStatus.LOADING 
          && appContext.currentDataState === dataStatus 
          && <span className="loading loading-spinner text-primary"></span>
@@ -190,6 +140,15 @@ export const ImportModal = ({ id, text, alertType }: AlertProps) => {
   )
 }
 
+export const ShowImportSuccessModal = () => {
+  // @ts-ignore
+  const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
+
+  appContext.dataStatus === LoadingStatus.SUCCESS && document.getElementById('importSuccess')?.showModal()
+  appContext.dataStatus === LoadingStatus.SUCCESS && setTimeout(() => document.getElementById('importSuccess')?.close(), 1000)
+  return <AlertModal text="DATA IMPORTED SUCCESSFULLY" id="importSuccess" alertType="alert-info" /> 
+}
+
 export const DataLayerPicker = () => {
   return (
   <select className="select select-info w-full max-w-xs text-deep-sky-200">
@@ -200,13 +159,3 @@ export const DataLayerPicker = () => {
   )
 }
 
-export const Spinner = () => {
-  // @ts-ignore
-  const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
-  return (
-    <>
-     {  appContext.dataStatus === LoadingStatus.LOADING 
-       && <img src={spinnerGif} className='' alt='Loading' /> }
-    </>
-  )
-}

@@ -1,5 +1,5 @@
 import { DataStatus } from "../types/enums";
-import { Button, PreprocessButton, SelectFields, ShowImportSuccessModal, UploadButton } from "../utilities/UtilityComponents";
+import { MultiButton, SelectFields, ShowImportSuccessModal } from "../utilities/UtilityComponents";
 
 
 export const ToolPanel = () => {
@@ -13,41 +13,43 @@ export const ToolPanel = () => {
       <div className="drawer-side">
         <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label> 
 
-        <Button 
+        <MultiButton
           text="IMPORT DATA" 
           textColor="text-deep-sky-200"
           color="bg-deep-sky-500"
-          modal="import"
           dataStatus={DataStatus.DATAIMPORTED}
           alertProps={{text: "IMPORT SUCCESS", id:"importDialog", alertType: "alert"}}
-          handleClick={()=>document.getElementById('importDialog').showModal()} 
+          onClickFunction={()=>document.getElementById('importDialog').showModal()} 
         />
         <br/><br/>
         
-        <UploadButton 
+        <MultiButton 
           text="UPLOAD DATA" 
           textColor="text-deep-sky-200"
           color="bg-deep-sky-500"
           dataStatus={DataStatus.DATASUBMITTED}
+          alertProps={{text: " SUCCESS", id:"importDialog", alertType: "alert"}}
         />
         <br/><br/>
 
-        <PreprocessButton
+        <MultiButton
           text="RETURN FIELDS" 
           textColor="text-deep-sky-200"
           color="bg-deep-sky-500"
           dataStatus={DataStatus.FIELDSRETURNED}
+          alertProps={{text: " SUCCESS", id:"importDialog", alertType: "alert"}}
         />
         <br/><br/>
 
         <SelectFields />
         <br/>
 
-        <PreprocessButton
+        <MultiButton
           text="PUBLISH DATA" 
           textColor="text-deep-sky-200"
           color="bg-deep-sky-500"
           dataStatus={DataStatus.FIELDSMATCHED}
+          alertProps={{text: " SUCCESS", id:"importDialog", alertType: "alert"}}
         />
 
 

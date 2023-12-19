@@ -41,7 +41,7 @@ export const initialDataState: DataContextInterface = {
 export const DataContext = createContext(initialDataState) 
 
 export const DataStore = ({ children }: { children: any }) => {
-  const [state, dispatch] = useReducer((state: DataContextInterface, action: Action) => {
+  const [state, dispatch] = useReducer((state: DataContextInterface, action: Action): DataContextInterface => {
     switch (action.type) {
       case dataActionType.DATAFORM:
         return {...state, dataForm: action.payload}

@@ -116,21 +116,6 @@ export interface LayoutProps {
   TopInfoBar: JSX.Element;
 }
 
-export interface ButtonProps {
-  text: string;
-  color: string;
-  textColor: string;
-  alertProps: AlertProps;
-  handleClick?: MouseEventHandler;
-  modal?: string;
-  dataStatus?: DataStatus;
-}
-
-export interface AlertProps {
-  id: string;
-  text: string;
-  alertType: string;
-}
 
 export interface MapContextInterface {
     scene?: __esri.WebScene;
@@ -156,3 +141,22 @@ export type GeoprocessingParams = {
   Field_Map: Object;
   JSON_data: Object;
 }
+
+export interface BaseComponentProps {
+  text?: string;
+  color?: string;
+  textColor?: string;
+  dataStatus?: DataStatus;
+}
+
+export interface ButtonProps extends BaseComponentProps {
+  alertProps?: AlertProps;
+  onClickFunction?: MouseEventHandler;
+}
+
+export interface AlertProps {
+  id: string;
+  alertType: string;
+  text: string;
+}
+

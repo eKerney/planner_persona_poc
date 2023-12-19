@@ -2,9 +2,16 @@ import * as geoprocessor from "@arcgis/core/rest/geoprocessor.js";
 import esriRequest from "@arcgis/core/request.js";
 import { AppContextInterface2, DataContextInterface, GPreturnData, GeoprocessingParams } from "../types";
 import { DataStatus, LoadingStatus, RequestType } from "../types/enums";
-import ingestData from './gpIngestReturn.json';
+import { DataContext } from "../contexts/DataStore";
+import { AppContext2 } from "../contexts/AppStore2";
+import { useContext } from "react";
 
-export const fetchGeoprocessData = (dataContext: DataContextInterface, dataDispatch: any, appContext: AppContextInterface2, appDispatch: any, formData: any = '', fieldMap: object = {}) => {
+export const useGeoprocessTool = () => {
+  // @ts-ignore
+  const [dataContext, dataDispatch] = useContext<DataContextInterface>(DataContext) 
+  // @ts-ignore
+  const [appContext, appDispatch] = useContext<AppContextInterface2>(AppContext2)
+  // parameterized URL for GP Tool 
   const baseGPurl = "https://gis-dev.airspacelink.com/server/rest/services/ETLUpload/GPServer";
   const gpToolURL = "/etl_upload";
   const gpUploadURL = "/uploads/upload";
@@ -18,24 +25,26 @@ export const fetchGeoprocessData = (dataContext: DataContextInterface, dataDispa
     Field_Map: {},
     JSON_data: {}
   };
-      const options = { 
-        interval: 1500, 
-        statusCallback: (j: any) => {
-          console.log("Job Status: ", j.jobStatus, j.messages, j.messages.length > 0 
-              ? j.messages[j.messages.length-1].description 
-              : '')
-          appDispatch({ type: 'geoprocessingMessages', payload: {
-            type: 'jobStatus', 
-            currentDataState: appContext.currentDataState,
-            messages: j.messages.length > 0 
-              ? j.messages[j.messages.length-1].description 
-              : ''
-          }})
-        }
-      };
 
+  // options for statusCallback messaging from geoprocessor.submitJob()
+  const options = { 
+    interval: 1500, 
+    statusCallback: (j: any) => {
+      console.log("Job Status: ", j.jobStatus, j.messages, j.messages.length > 0 
+          ? j.messages[j.messages.length-1].description 
+          : '')
+      appDispatch({ type: 'geoprocessingMessages', payload: {
+        type: 'jobStatus', 
+        currentDataState: appContext.currentDataState,
+        messages: j.messages.length > 0 
+          ? j.messages[j.messages.length-1].description 
+          : ''
+      }})
+    }
+  };
 
-  const ETLgeoProcessingIngest = (gpParams: GeoprocessingParams, baseGPurl: string, gpUploadURL: string, gpToolURL: string, formData: HTMLFormElement) => {
+  // GP Tool Ingest Request
+  const ETLgeoProcessingIngest = (gpParams: GeoprocessingParams, baseGPurl: string, gpUploadURL: string, gpToolURL: string) => {
     console.log('ETLgeoProcessingIngest');
     appDispatch({ type: 'multiple', payload: {dataStatus: LoadingStatus.LOADING, currentDataState: DataStatus.DATASUBMITTED}})
     const uploadSucceeded = (response: any) => {
@@ -47,7 +56,7 @@ export const fetchGeoprocessData = (dataContext: DataContextInterface, dataDispa
     const uploadFailed = (response: any) => console.log("Failed: ", response);
     esriRequest((`${baseGPurl}${gpUploadURL}`), {
       method: "post", 
-      body: formData,
+      body: dataContext.dataForm,
       authMode: "immediate",
     }).then(uploadSucceeded, uploadFailed)
     .catch((error) => {
@@ -56,29 +65,13 @@ export const fetchGeoprocessData = (dataContext: DataContextInterface, dataDispa
     });
   }
 
+  // Atfer file upload via esriRequest() - fire GeoProcessor Ingest Job
   const GeoprocessorSubmitJob = (baseGPurl: string, gpToolURL: string, gpParams: GeoprocessingParams, itemID: string) => {
     console.log('GeoprocessorSubmitJob')
     gpParams.FIle = { itemID: itemID };
-    // console.log(gpParams);
 
     geoprocessor.submitJob((`${baseGPurl}${gpToolURL}`), gpParams).then((jobInfo) => {
       console.log("ArcGIS Server job ID: ", jobInfo.jobId);
-
-      // const options = { 
-      //   interval: 1500, 
-      //   statusCallback: (j: any) => {
-      //     console.log("Job Status: ", j.jobStatus, j.messages, j.messages.length > 0 
-      //         ? j.messages[j.messages.length-1].description 
-      //         : '')
-      //     appDispatch({ type: 'geoprocessingMessages', payload: {
-      //       type: 'jobStatus', 
-      //       currentDataState: appContext.currentDataState,
-      //       messages: j.messages.length > 0 
-      //         ? j.messages[j.messages.length-1].description 
-      //         : ''
-      //     }})
-      //   }
-      // };
 
       jobInfo.waitForJobCompletion(options).then(() => {
         const gpIngestReturn: GPreturnData = { Return_Fields: '', Return_df_Json: {}, Return_Req_Fields: ''}
@@ -107,9 +100,9 @@ export const fetchGeoprocessData = (dataContext: DataContextInterface, dataDispa
     })
   }
 
-  const ETLgeoProcessingPreprocess = (gpParams: GeoprocessingParams, baseGPurl: string, gpToolURL: string, fieldMap: object) => {
+  // GeoProcessing PreProcess Job Function
+  const ETLgeoProcessingPreprocess = (gpParams: GeoprocessingParams, baseGPurl: string, gpToolURL: string) => {
     console.log('ETLgeoProcessingPreprocess');
-    console.log('appContext.geoprocessingParams', appContext.geoprocessingParams);
     appDispatch({ type: 'multiple', payload: {dataStatus: LoadingStatus.LOADING}})
     gpParams = {
       ...gpParams, 
@@ -121,7 +114,6 @@ export const fetchGeoprocessData = (dataContext: DataContextInterface, dataDispa
 
     geoprocessor.submitJob((`${baseGPurl}${gpToolURL}`), gpParams).then((jobInfo) => {
       console.log("ArcGIS Server job ID: ", jobInfo.jobId);
-      // const options = { interval: 1500, statusCallback: (j: any) => console.log("Job Status: ", j.jobStatus, j.messages, j.messages.length > 0 ? j.messages[j.messages.length-1].description : '')};
 
       jobInfo.waitForJobCompletion(options).then(() => {
         jobInfo.fetchResultData("Return_df_Json").then((data) => {
@@ -139,6 +131,7 @@ export const fetchGeoprocessData = (dataContext: DataContextInterface, dataDispa
     });
   }
 
+  // GeoProcessing Publish/Upload Final stage Function 
   const ETLgeoProcessingUpload = (gpParams: GeoprocessingParams, baseGPurl: string, gpToolURL: string) => {
     console.log('ETLgeoProcessingUpload');
     appDispatch({ type: 'multiple', payload: {dataStatus: LoadingStatus.LOADING}})
@@ -151,7 +144,6 @@ export const fetchGeoprocessData = (dataContext: DataContextInterface, dataDispa
 
     geoprocessor.submitJob((`${baseGPurl}${gpToolURL}`), gpParams).then((jobInfo) => {
       console.log("ArcGIS Server job ID: ", jobInfo.jobId);
-      // const options = { interval: 1500, statusCallback: (j: any) => console.log("Job Status: ", j.jobStatus, j.messages, j.messages.length > 0 ? j.messages[j.messages.length-1].description : '')};
 
       jobInfo.waitForJobCompletion(options).then(() => {
         jobInfo.fetchResultData("Return_df_Json").then((data) => {
@@ -167,30 +159,14 @@ export const fetchGeoprocessData = (dataContext: DataContextInterface, dataDispa
     });
   }
 
-  // local testing
-  // const ETLgeoProcessingIngest = (gpParams: GeoprocessingParams, baseGPurl: string, gpUploadURL: string, gpToolURL: string, formData: HTMLFormElement) => {
-  //   console.log('ETLgeoProcessingIngest');
-  //   const gpIngestReturn: GPingestReturn = { 
-  //     Return_Fields: ingestData.Return_Fields.split(","), 
-  //     Return_df_Json: ingestData.Return_df_Json, 
-  //     Return_Req_Fields: ingestData.Return_Req_Fields.split(",")
-  //   }
-  //   //
-  //   dataDispatch({ type: 'gpIngestReturn', payload: gpIngestReturn })
-  //   appDispatch({ type: 'multiple', payload: {
-  //     dataStatus: LoadingStatus.LOADING, 
-  //     currentDataState: DataStatus.FIELDSRETURNED,
-  //     requestType: RequestType.PREPROCESS
-  //   }})
-  //
-  // }
-  const makeRequest = () => {
+  // Logic for which type of request occurs here
+  const fetchSwitch = () => {
     switch (appContext.requestType) {
       case RequestType.INGEST:
-        ETLgeoProcessingIngest(gpParams, baseGPurl, gpUploadURL, gpToolURL, formData)
+        ETLgeoProcessingIngest(gpParams, baseGPurl, gpUploadURL, gpToolURL)
         break;
       case RequestType.PREPROCESS:
-        ETLgeoProcessingPreprocess(gpParams, baseGPurl, gpToolURL, fieldMap)
+        ETLgeoProcessingPreprocess(gpParams, baseGPurl, gpToolURL)
         break;
       case RequestType.UPLOAD:
         ETLgeoProcessingUpload(gpParams, baseGPurl, gpToolURL)
@@ -201,5 +177,7 @@ export const fetchGeoprocessData = (dataContext: DataContextInterface, dataDispa
     }
   }
 
-  return makeRequest();
+  return fetchSwitch;
+
 }
+
