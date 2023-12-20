@@ -82,7 +82,7 @@ export interface DataLayerAttributes {
 
 export interface DataAction {
   DATAFORM: string;
-  DATATYPE: string; 
+  DATALAYERATTRIBUTES: string; 
   DATASOURCE: string;
   GEOMETRYTYPE: string;
   GEOJSONFEATURECOLLECTION: string;

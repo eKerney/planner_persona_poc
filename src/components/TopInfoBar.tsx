@@ -4,13 +4,13 @@ import { MessageBox, StatusBox } from "../utilities/UtilityComponents"
 export const TopInfoBar = () => {
   return (
     <div id='topNav' className='border border-deep-sky-500 border-2 rounded-lg shadow-xl row-span-1 grid grid-cols-6 '>
-      <div className='border border-long-haul border-2 rounded-lg my-0.5 col-span-2'>
+      <div className='border border-long-haul border-2 rounded-lg m-2 col-span-2'>
         <MessageBox     
           textColor="text-deep-sky-500"
           color="bg-long-haul/10"
         />
       </div>
-      <div className='border border-long-haul border-2 rounded-lg my-0.5 '>
+      <div className='border border-long-haul border-2 rounded-lg m-2 '>
         <StatusBox
           text="DATA IMPORTED" 
           textColor="text-deep-sky-200"
@@ -18,7 +18,7 @@ export const TopInfoBar = () => {
           dataStatus={DataStatus.DATASUBMITTED}
         />
       </div>
-      <div className='border border-long-haul border-2 rounded-lg my-0.5 '>
+      <div className='border border-long-haul border-2 rounded-lg m-2 '>
         <StatusBox
           text="DATA UPLOADED" 
           textColor="text-deep-sky-200"
@@ -26,7 +26,7 @@ export const TopInfoBar = () => {
           dataStatus={DataStatus.FIELDSRETURNED}
         />
       </div>
-      <div className='border border-long-haul border-2 rounded-lg my-0.5 '>
+      <div className='border border-long-haul border-2 rounded-lg m-2 '>
         <StatusBox
           text="DATA FIELDS MATCHED" 
           textColor="text-deep-sky-200"
@@ -34,7 +34,7 @@ export const TopInfoBar = () => {
           dataStatus={DataStatus.FIELDSMATCHED}
         />
       </div>
-      <div className='border border-long-haul border-2 rounded-lg my-0.5 '>
+      <div className='border border-long-haul border-2 rounded-lg m-2 '>
         <StatusBox
           text="DATA PUBLISHED" 
           textColor="text-deep-sky-200"

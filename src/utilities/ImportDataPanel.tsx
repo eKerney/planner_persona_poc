@@ -3,7 +3,7 @@ import { fileLoader, fileValidator } from './DataLoader';
 import { DataContext } from '../contexts/DataStore';
 import { basicDataAnalysis } from './DataAnalysis';
 import { AppContext2 } from '../contexts/AppStore2';
-import { LoadingStatus } from '../types/enums';
+import { DataType, LoadingStatus } from '../types/enums';
 import { DataLayerPicker, DataTypePicker } from './UtilityComponents';
 
 export const ImportDataPanel = (id: string) => {
@@ -15,8 +15,12 @@ export const ImportDataPanel = (id: string) => {
   const [form, setForm] = useState();
 
   useEffect(function afterUploadSuccessEffect() {
-    // appContext.dataStatus === LoadingStatus.SUCCESS && fileValidator(dataContext, dataDispatch);
-    // appContext.dataStatus === LoadingStatus.SUCCESS && basicDataAnalysis(dataContext, dataDispatch, 'AGL');
+    appContext.dataStatus === LoadingStatus.SUCCESS 
+      && dataContext.dataLayerAttributes.dataType === DataType.GEOJSON 
+      && fileValidator(dataContext, dataDispatch);
+    appContext.dataStatus === LoadingStatus.SUCCESS 
+      && dataContext.dataLayerAttributes.dataType === DataType.GEOJSON 
+      && basicDataAnalysis(dataContext, dataDispatch, 'AGL');
   }, [appContext.dataStatus])
 
   useEffect(function fileUploadReader() {

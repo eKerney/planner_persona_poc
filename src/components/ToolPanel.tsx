@@ -52,7 +52,6 @@ export const ToolPanel = () => {
           alertProps={{text: " SUCCESS", id:"importDialog", alertType: "alert"}}
         />
         <br/><br/>
-
       </div>
     </div>
     )

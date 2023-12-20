@@ -6,6 +6,7 @@ import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
 import SceneLayer from "@arcgis/core/layers/SceneLayer";
 import { MapContext } from "../contexts/MapStore";
 import { AppContext2 } from "../contexts/AppStore2";
+import { DataTable } from "../utilities/UtilityComponents";
 
 export const ArcGISmap = ({ children }: {children: any}) => {
   // @ts-ignore
@@ -52,7 +53,8 @@ export const ArcGISmap = ({ children }: {children: any}) => {
     }, []);
   return (
       <>
-        <div className="mapDiv" ref={mapDiv} ></div>
+        <div className="mapDiv" ref={mapDiv} >
+        </div>
         {children}
       </>
   );

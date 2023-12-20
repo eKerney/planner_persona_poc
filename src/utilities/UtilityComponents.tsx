@@ -184,40 +184,41 @@ export const DataTypePicker = () => {
 }
 
 export const DataTable = () => {
+  // @ts-ignore
+  const [dataContext, dataDispatch] = useContext<DataContextInterface>(DataContext) 
+  const [dataRows, setDataRows] = useState<Object[]>([]);
+
+  useEffect(() => {
+    const dataFrame = Object.entries(dataContext.gpIngestReturn.Return_df_Json).map(([key,value]) => ([key,Object.entries(value)])).map(([key,value]) => value.map(val => ({[key]:val[1]}))).reduce((acc,val) => val.map((v,i) => (acc[i] || acc.push([])) && acc[i].concat(v)), []).map(a => a.reduce((acc,val) => Object.assign(acc,val),{}));
+    setDataRows(dataFrame);
+    console.log(dataFrame);
+  }, [dataContext.gpIngestReturn])
+
   return (
-  <>
-    <div className="overflow-x-auto form-control flex justify-center">
-      <table className="table ">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Job</th>
-            <th>Favorite Color</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th>1</th>
-            <td>Cy Ganderton</td>
-            <td>Quality Control Specialist</td>
-            <td>Blue</td>
-          </tr>
-          <tr className="hover">
-            <th>2</th>
-            <td>Hart Hagerty</td>
-            <td>Desktop Support Technician</td>
-            <td>Purple</td>
-          </tr>
-          <tr>
-            <th>3</th>
-            <td>Brice Swyre</td>
-            <td>Tax Accountant</td>
-            <td>Red</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <>
+    { dataContext.gpIngestReturn.Return_Req_Fields.length > 0 &&
+      <div className="overflow-x-auto">
+        <table className="table table-xs overflow-x-auto">
+          <thead>
+            <tr>
+              <th></th>
+              { Object.keys(dataContext.gpIngestReturn.Return_df_Json).map((d: string) => <th key={d}>{d}</th>) }
+            </tr>
+          </thead>
+          <tbody>
+          { dataRows.map((d: Object, i: number) => {
+              return (
+                <tr>
+                <th>{i}</th>
+                  { Object.values(d).map((z: string) => <th>{z}</th>) }
+                </tr>
+              )
+            })
+          }
+          </tbody>
+        </table>
+      </div>
+    }
     </>
   )
 }
