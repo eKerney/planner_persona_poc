@@ -4,7 +4,7 @@
         {
             "type": "Feature",
             "properties": {
-                "AGL": 222,
+                "ABOVEGROUND": 222,
                 "WKID": 4326,
                 "Notes": "Renaissance Center",
                 "Longitude": -83.03974225868565,
@@ -21,7 +21,7 @@
         {
             "type": "Feature",
             "properties": {
-                "AGL": 189,
+                "ABOVEGROUND": 189,
                 "WKID": 4326,
                 "Notes": "Ally Detroit Center",
                 "Longitude": -83.0449315210592,
@@ -38,7 +38,7 @@
         {
             "type": "Feature",
             "properties": {
-                "AGL": 172,
+                "ABOVEGROUND": 172,
                 "WKID": 4326,
                 "Notes": "Penobscot Building",
                 "Longitude": -83.0475250285068,
@@ -53,55 +53,21 @@
             }
         },
         {
-          "type": "Feature",
-          "properties": {
-            "AGL": 151,
-            "WKID": 4326,
-            "Notes": "Guardian Building",
-            "Longitude": -83.04617220197228,
-            "Latitude": 42.32995829676747
-          },
-          "geometry": {
-            "coordinates": [
-              -83.04617220197228,
-              42.32995829676747
-            ],
-            "type": "Point"
-          }
-        },
-        {
-          "type": "Feature",
-          "properties": {
-            "AGL": 145,
-            "WKID": 4326,
-            "Notes": "Book Tower",
-            "Longitude": -83.05160002791476,
-            "Latitude": 42.33350015437509
-          },
-          "geometry": {
-            "coordinates": [
-              -83.05160002791476,
-              42.33350015437509
-            ],
-            "type": "Point"
-          }
-        },
-        {
-          "type": "Feature",
-          "properties": {
-            "AGL": 135,
-            "WKID": 4326,
-            "Notes": "Fisher Building",
-            "Longitude": -83.0772926920413,
-            "Latitude": 42.3695780741607
-          },
-          "geometry": {
-            "coordinates": [
-              -83.0772926920413,
-              42.3695780741607
-            ],
-            "type": "Point"
-          }
+            "type": "Feature",
+            "properties": {
+                "ABOVEGROUND": 151,
+                "WKID": 4326,
+                "Notes": "Guardian Building",
+                "Longitude": -83.04617220197228,
+                "Latitude": 42.32995829676747
+            },
+            "geometry": {
+                "coordinates": [
+                    -83.04617220197228,
+                    42.32995829676747
+                ],
+                "type": "Point"
+            }
         }
     ]
 }

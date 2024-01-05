@@ -30,18 +30,28 @@ export const useGeoprocessTool = () => {
   const options = { 
     interval: 1500, 
     statusCallback: (j: any) => {
-      console.log("Job Status: ", j.jobStatus, j.messages, j.messages.length > 0 
-          ? j.messages[j.messages.length-1].description 
-          : '')
+      const description = j.messages.length > 0
+        ? j.messages[j.messages.length-1].description
+        : '';
+      console.log("Job Status: ", j.jobStatus, j.messages, description);
       appDispatch({ type: 'geoprocessingMessages', payload: {
         type: 'jobStatus', 
         currentDataState: appContext.currentDataState,
-        message: j.messages.length > 0 
-          ? j.messages[j.messages.length-1].description 
-          : ''
+        message: description
       }})
     }
   };
+  const errorCallback = (error: any) => {
+        console.error(`An error occured!!!: ${JSON.stringify(error)}`);
+        console.error(error);
+        const description: String = error.messages[error.messages.length-1].description;
+        appDispatch({ type: 'geoprocessingMessages', payload: {
+          type: 'jobStatus', 
+          currentDataState: appContext.currentDataState,
+          message: description
+        }})
+        return null;
+  }
 
   // GP Tool Ingest Request
   const ETLgeoProcessingIngest = (gpParams: GeoprocessingParams, baseGPurl: string, gpUploadURL: string, gpToolURL: string) => {
@@ -70,6 +80,7 @@ export const useGeoprocessTool = () => {
   const GeoprocessorSubmitJob = (baseGPurl: string, gpToolURL: string, gpParams: GeoprocessingParams, itemID: string) => {
     console.log('GeoprocessorSubmitJob')
     gpParams.FIle = { itemID: itemID };
+    // gpParams.FIle = { itemID: '' };
 
     geoprocessor.submitJob((`${baseGPurl}${gpToolURL}`), gpParams).then((jobInfo) => {
       console.log("ArcGIS Server job ID: ", jobInfo.jobId);
@@ -98,10 +109,12 @@ export const useGeoprocessTool = () => {
           })
         })
       })
+      .catch((error) => errorCallback(error))
     })
   }
 
   // GeoProcessing PreProcess Job Function
+  // testing error here
   const ETLgeoProcessingPreprocess = (gpParams: GeoprocessingParams, baseGPurl: string, gpToolURL: string) => {
     console.log('ETLgeoProcessingPreprocess');
     appDispatch({ type: 'multiple', payload: {dataStatus: LoadingStatus.LOADING}})
@@ -110,6 +123,7 @@ export const useGeoprocessTool = () => {
       FIle : appContext.geoprocessingParams.FIle,
       JSON_data: dataContext.gpIngestReturn.Return_df_Json,
       Field_Map: dataContext.fieldMap
+      // Field_Map: {'someKey': 'someValue'} 
     };
     console.log('gpParams', gpParams);
 
@@ -128,8 +142,9 @@ export const useGeoprocessTool = () => {
             geoprocessingParams: {...appContext.geoprocessingParams, Data_Type: 'obstacles', JSON_data: data.value  }
           }});
         });
-      });
-    });
+      })
+      .catch((error) => errorCallback(error))
+    })
   }
 
   // GeoProcessing Publish/Upload Final stage Function 
@@ -163,7 +178,8 @@ export const useGeoprocessTool = () => {
             geoprocessingParams: {...appContext.geoprocessingParams, Data_Type: 'obstacles', JSON_data: data.value  }
           }});
         });
-      });
+      })
+      .catch((error) => errorCallback(error))
     });
   }
 
